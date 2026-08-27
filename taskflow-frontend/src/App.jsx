@@ -1,23 +1,22 @@
 import Layout from './components/Layout'
+import TaskForm from './components/TaskForm'
+import TaskItem from './components/TaskItem'
 import { useTasks } from './context/TaskContext'
 
 function App() {
-  const { tasks, addTask } = useTasks()
+  const { tasks } = useTasks()
 
   return (
     <Layout>
-      <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-        Welcome to TaskFlow
+      <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
+        My Tasks
       </h2>
-      <p className="mt-2 text-slate-600 dark:text-slate-400">
-        Tasks count: {tasks.length}
-      </p>
-      <button
-        onClick={() => addTask('Test task')}
-        className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded"
-      >
-        Add Test Task
-      </button>
+      <TaskForm />
+      <div className="space-y-2">
+        {tasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </div>
     </Layout>
   )
 }
