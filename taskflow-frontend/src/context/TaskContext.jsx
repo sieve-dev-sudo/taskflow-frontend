@@ -1,9 +1,14 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import { loadTasks, saveTasks } from '../utils/localStorage'
 
 const TaskContext = createContext(null)
 
 export function TaskProvider({ children }) {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState(() => loadTasks())
+
+  useEffect(() => {
+    saveTasks(tasks)
+  }, [tasks])
 
   const addTask = (title) => {
     const newTask = {
