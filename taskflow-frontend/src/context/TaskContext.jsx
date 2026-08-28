@@ -10,11 +10,12 @@ export function TaskProvider({ children }) {
     saveTasks(tasks)
   }, [tasks])
 
-  const addTask = (title) => {
+  const addTask = (title, priority = 'medium') => {
     const newTask = {
       id: Date.now().toString(),
       title,
       completed: false,
+      priority,
       createdAt: new Date().toISOString(),
     }
     setTasks((prev) => [...prev, newTask])
