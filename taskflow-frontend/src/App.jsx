@@ -1,10 +1,19 @@
+import { useState } from 'react'
 import Layout from './components/Layout'
 import TaskForm from './components/TaskForm'
-import TaskItem from './components/TaskItem'
+import TaskList from './components/TaskList'
+import TaskFilter from './components/TaskFilter'
 import { useTasks } from './context/TaskContext'
 
 function App() {
   const { tasks } = useTasks()
+  const [filter, setFilter] = useState('All')
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'Active') return !task.completed
+    if (filter === 'Completed') return task.completed
+    return true
+  })
 
   return (
     <Layout>
@@ -12,11 +21,8 @@ function App() {
         My Tasks
       </h2>
       <TaskForm />
-      <div className="space-y-2">
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
-      </div>
+      <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
+      <TaskList tasks={filteredTasks} />
     </Layout>
   )
 }
