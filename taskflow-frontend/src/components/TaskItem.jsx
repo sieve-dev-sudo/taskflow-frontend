@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTasks } from '../context/TaskContext'
 import PriorityBadge from './PriorityBadge'
+import { formatDate, isOverdue } from '../utils/date'
 
 function TaskItem({ task }) {
   const { toggleTask, deleteTask, editTask } = useTasks()
@@ -13,6 +14,8 @@ function TaskItem({ task }) {
     }
     setIsEditing(false)
   }
+
+  const overdue = !task.completed && isOverdue(task.dueDate)
 
   return (
     <div className="flex items-center gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg">
@@ -34,10 +37,10 @@ function TaskItem({ task }) {
           className="flex-1 px-2 py-1 border border-slate-300 dark:border-slate-600 rounded"
         />
       ) : (
-        <>
+        <div className="flex-1">
           <span
             onDoubleClick={() => setIsEditing(true)}
-            className={`flex-1 ${
+            className={`${
               task.completed
                 ? 'line-through text-slate-400'
                 : 'text-slate-900 dark:text-slate-100'
@@ -45,9 +48,20 @@ function TaskItem({ task }) {
           >
             {task.title}
           </span>
-          <PriorityBadge priority={task.priority} />
-        </>
+          {task.dueDate && (
+            <span
+              className={`ml-2 text-xs ${
+                overdue ? 'text-red-600 font-semibold' : 'text-slate-400'
+              }`}
+            >
+              {overdue ? '⚠ Overdue: ' : 'Due: '}
+              {formatDate(task.dueDate)}
+            </span>
+          )}
+        </div>
       )}
+
+      <PriorityBadge priority={task.priority} />
 
       <button
         onClick={() => setIsEditing(true)}
