@@ -17,7 +17,7 @@ function TaskForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-6 flex-wrap">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mb-6">
       <input
         type="text"
         value={title}
@@ -25,27 +25,29 @@ function TaskForm() {
         placeholder="Add a new task..."
         className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
       />
-      <select
-        value={priority}
-        onChange={(e) => setPriority(e.target.value)}
-        className="px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-      >
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
-      <input
-        type="date"
-        value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
-        className="px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-      />
-      <button
-        type="submit"
-        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-      >
-        Add
-      </button>
+      <div className="flex gap-2">
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+          className="flex-1 sm:flex-none px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+        >
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <input
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          className="flex-1 sm:flex-none px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 whitespace-nowrap"
+        >
+          Add
+        </button>
+      </div>
     </form>
   )
 }
