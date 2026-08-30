@@ -3,17 +3,23 @@ import Layout from './components/Layout'
 import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 import TaskFilter from './components/TaskFilter'
+import SearchBar from './components/SearchBar'
 import { useTasks } from './context/TaskContext'
 
 function App() {
   const { tasks } = useTasks()
   const [filter, setFilter] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === 'Active') return !task.completed
-    if (filter === 'Completed') return task.completed
-    return true
-  })
+  const filteredTasks = tasks
+    .filter((task) => {
+      if (filter === 'Active') return !task.completed
+      if (filter === 'Completed') return task.completed
+      return true
+    })
+    .filter((task) =>
+      task.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
 
   return (
     <Layout>
@@ -21,6 +27,7 @@ function App() {
         My Tasks
       </h2>
       <TaskForm />
+      <SearchBar value={searchQuery} onChange={setSearchQuery} />
       <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
       <TaskList tasks={filteredTasks} />
     </Layout>
