@@ -1,13 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import TaskItem from './TaskItem'
+import EmptyState from './EmptyState'
 
 function TaskList({ tasks }) {
   if (tasks.length === 0) {
-    return (
-      <p className="text-center text-slate-400 py-8">
-        No tasks yet. Add one above!
-      </p>
-    )
+    return <EmptyState message="No tasks yet. Add one above!" />
   }
 
   return (
