@@ -18,13 +18,17 @@ function TaskItem({ task }) {
   const overdue = !task.completed && isOverdue(task.dueDate)
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg">
+    <div
+      className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg"
+      role="listitem"
+    >
       <div className="flex items-center gap-3">
         <input
           type="checkbox"
           checked={task.completed}
           onChange={() => toggleTask(task.id)}
-          className="w-4 h-4 shrink-0"
+          aria-label={`Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
+          className="w-4 h-4 shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
 
         {isEditing ? (
@@ -35,6 +39,7 @@ function TaskItem({ task }) {
             onBlur={handleSave}
             onKeyDown={(e) => e.key === 'Enter' && handleSave()}
             autoFocus
+            aria-label="Edit task title"
             className="flex-1 px-2 py-1 border border-slate-300 dark:border-slate-600 rounded"
           />
         ) : (
@@ -67,13 +72,15 @@ function TaskItem({ task }) {
         <PriorityBadge priority={task.priority} />
         <button
           onClick={() => setIsEditing(true)}
-          className="text-sm text-indigo-600 hover:underline"
+          aria-label={`Edit task: ${task.title}`}
+          className="text-sm text-indigo-600 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
         >
           Edit
         </button>
         <button
           onClick={() => deleteTask(task.id)}
-          className="text-sm text-red-600 hover:underline"
+          aria-label={`Delete task: ${task.title}`}
+          className="text-sm text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
         >
           Delete
         </button>
