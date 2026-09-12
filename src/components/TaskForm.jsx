@@ -17,16 +17,21 @@ function TaskForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mb-6">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mb-6" aria-label="Add new task form">
+      <label htmlFor="task-title" className="sr-only">Task title</label>
       <input
+        id="task-title"
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a new task..."
+        aria-required="true"
         className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
       />
       <div className="flex gap-2">
+        <label htmlFor="task-priority" className="sr-only">Priority level</label>
         <select
+          id="task-priority"
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
           className="flex-1 sm:flex-none px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
@@ -35,7 +40,9 @@ function TaskForm() {
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
+        <label htmlFor="task-due-date" className="sr-only">Due date</label>
         <input
+          id="task-due-date"
           type="date"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
@@ -43,7 +50,8 @@ function TaskForm() {
         />
         <button
           type="submit"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 whitespace-nowrap"
+          aria-label="Add task"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           Add
         </button>

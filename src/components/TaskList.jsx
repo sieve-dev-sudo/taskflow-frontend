@@ -8,7 +8,7 @@ function TaskList({ tasks }) {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" role="list" aria-label="Task list">
       <AnimatePresence>
         {tasks.map((task) => (
           <motion.div
