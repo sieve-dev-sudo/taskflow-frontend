@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTasks } from '../context/TaskContext'
 import PriorityBadge from './PriorityBadge'
+import CategoryBadge from './CategoryBadge'
 import { formatDate, isOverdue } from '../utils/date'
 
 function TaskItem({ task }) {
@@ -69,6 +70,7 @@ function TaskItem({ task }) {
       </div>
 
       <div className="flex items-center gap-2 ml-7 sm:ml-0">
+        <CategoryBadge category={task.category} />
         <PriorityBadge priority={task.priority} />
         <button
           onClick={() => setIsEditing(true)}
