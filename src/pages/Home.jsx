@@ -27,10 +27,12 @@ function Home() {
         My Tasks
       </h2>
       <StatsDashboard tasks={tasks} />
-      <div className="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm">
+      <div className="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm space-y-4">
         <TaskForm />
-        <SearchBar value={searchQuery} onChange={setSearchQuery} />
-        <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
+        <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+          <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
+          <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        </div>
       </div>
       <TaskList tasks={filteredTasks} />
     </div>
