@@ -21,55 +21,63 @@ function TaskForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 mb-6" aria-label="Add new task form">
-      <label htmlFor="task-title" className="sr-only">Task title</label>
-      <input
-        id="task-title"
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Add a new task..."
-        aria-required="true"
-        className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-      />
-      <div className="flex gap-2 flex-wrap">
+    <form onSubmit={handleSubmit} className="space-y-3 mb-4" aria-label="Add new task form">
+      {/* ជួរទី ១: Title (ពេញទទឹង) */}
+      <div>
+        <label htmlFor="task-title" className="sr-only">Task title</label>
+        <input
+          id="task-title"
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="What needs to be done?"
+          aria-required="true"
+          className="w-full px-4 py-3 text-base border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+        />
+      </div>
+
+      {/* ជួរទី ២: Category, Priority, Due Date, Add Button */}
+      <div className="flex flex-col sm:flex-row gap-2">
         <label htmlFor="task-category" className="sr-only">Category</label>
         <select
           id="task-category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="flex-1 sm:flex-none px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+          className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         >
           {CATEGORIES.map((cat) => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
+
         <label htmlFor="task-priority" className="sr-only">Priority level</label>
         <select
           id="task-priority"
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
-          className="flex-1 sm:flex-none px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+          className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         >
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
+
         <label htmlFor="task-due-date" className="sr-only">Due date</label>
         <input
           id="task-due-date"
           type="date"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
-          className="flex-1 sm:flex-none px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+          className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         />
+
         <button
           type="submit"
           aria-label="Add task"
-          className="flex items-center gap-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+          className="flex items-center justify-center gap-1.5 px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 sm:w-auto w-full"
         >
           <Plus className="w-4 h-4" />
-          Add
+          Add Task
         </button>
       </div>
     </form>
