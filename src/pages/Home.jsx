@@ -22,16 +22,18 @@ function Home() {
     )
 
   return (
-    <>
-      <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
+    <div className="space-y-6">
+      <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
         My Tasks
       </h2>
       <StatsDashboard tasks={tasks} />
-      <TaskForm />
-      <SearchBar value={searchQuery} onChange={setSearchQuery} />
-      <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
+      <div className="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm">
+        <TaskForm />
+        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
+      </div>
       <TaskList tasks={filteredTasks} />
-    </>
+    </div>
   )
 }
 
