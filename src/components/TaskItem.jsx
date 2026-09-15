@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Pencil, Trash2 } from 'lucide-react'
+import { Pencil, Trash2, AlertTriangle } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import PriorityBadge from './PriorityBadge'
 import CategoryBadge from './CategoryBadge'
@@ -21,18 +21,18 @@ function TaskItem({ task }) {
 
   return (
     <div
-      className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+      className="flex items-start sm:items-center gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
       role="listitem"
     >
-      <div className="flex items-center gap-3 flex-1">
-        <input
-          type="checkbox"
-          checked={task.completed}
-          onChange={() => toggleTask(task.id)}
-          aria-label={`Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
-          className="w-4 h-4 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-        />
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={() => toggleTask(task.id)}
+        aria-label={`Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
+        className="w-4 h-4 mt-1 sm:mt-0 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+      />
 
+      <div className="flex-1 min-w-0">
         {isEditing ? (
           <input
             type="text"
@@ -42,10 +42,10 @@ function TaskItem({ task }) {
             onKeyDown={(e) => e.key === 'Enter' && handleSave()}
             autoFocus
             aria-label="Edit task title"
-            className="flex-1 px-2 py-1 border border-slate-300 dark:border-slate-600 rounded"
+            className="w-full px-2 py-1 border border-slate-300 dark:border-slate-600 rounded"
           />
         ) : (
-          <div className="flex-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <span
               onDoubleClick={() => setIsEditing(true)}
               className={`${
@@ -58,11 +58,14 @@ function TaskItem({ task }) {
             </span>
             {task.dueDate && (
               <span
-                className={`ml-2 text-xs ${
-                  overdue ? 'text-red-600 font-semibold' : 'text-slate-400'
+                className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${
+                  overdue
+                    ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300 font-semibold'
+                    : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
                 }`}
               >
-                {overdue ? '⚠ Overdue: ' : 'Due: '}
+                {overdue && <AlertTriangle className="w-3 h-3" />}
+                {overdue ? 'Overdue: ' : 'Due: '}
                 {formatDate(task.dueDate)}
               </span>
             )}
@@ -70,7 +73,7 @@ function TaskItem({ task }) {
         )}
       </div>
 
-      <div className="flex items-center gap-3 ml-7 sm:ml-0">
+      <div className="flex items-center gap-2 shrink-0">
         <CategoryBadge category={task.category} />
         <PriorityBadge priority={task.priority} />
         <button
