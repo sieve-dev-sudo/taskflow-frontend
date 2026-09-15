@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Plus } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import { CATEGORIES } from '../utils/categories'
 
@@ -65,8 +66,9 @@ function TaskForm() {
         <button
           type="submit"
           aria-label="Add task"
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="flex items-center gap-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
         >
+          <Plus className="w-4 h-4" />
           Add
         </button>
       </div>
