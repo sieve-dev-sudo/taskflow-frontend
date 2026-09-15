@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Pencil, Trash2 } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import PriorityBadge from './PriorityBadge'
 import CategoryBadge from './CategoryBadge'
@@ -20,16 +21,16 @@ function TaskItem({ task }) {
 
   return (
     <div
-      className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg"
+      className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
       role="listitem"
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-1">
         <input
           type="checkbox"
           checked={task.completed}
           onChange={() => toggleTask(task.id)}
           aria-label={`Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
-          className="w-4 h-4 shrink-0 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-4 h-4 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         />
 
         {isEditing ? (
@@ -69,22 +70,22 @@ function TaskItem({ task }) {
         )}
       </div>
 
-      <div className="flex items-center gap-2 ml-7 sm:ml-0">
+      <div className="flex items-center gap-3 ml-7 sm:ml-0">
         <CategoryBadge category={task.category} />
         <PriorityBadge priority={task.priority} />
         <button
           onClick={() => setIsEditing(true)}
           aria-label={`Edit task: ${task.title}`}
-          className="text-sm text-indigo-600 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+          className="text-indigo-600 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded p-1"
         >
-          Edit
+          <Pencil className="w-4 h-4" />
         </button>
         <button
           onClick={() => deleteTask(task.id)}
           aria-label={`Delete task: ${task.title}`}
-          className="text-sm text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+          className="text-red-600 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded p-1"
         >
-          Delete
+          <Trash2 className="w-4 h-4" />
         </button>
       </div>
     </div>
