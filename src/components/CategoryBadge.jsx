@@ -1,11 +1,13 @@
 import { CATEGORY_STYLES } from '../utils/categories'
 
 function CategoryBadge({ category }) {
+  const safeCategory = category || 'General'
+
   return (
     <span
-      className={`text-xs px-2 py-0.5 rounded-full ${CATEGORY_STYLES[category] || CATEGORY_STYLES.General}`}
+      className={`text-xs px-2.5 py-1 rounded-full ${CATEGORY_STYLES[safeCategory] || CATEGORY_STYLES.General}`}
     >
-      {category}
+      {safeCategory}
     </span>
   )
 }
