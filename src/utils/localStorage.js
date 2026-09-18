@@ -1,10 +1,5 @@
 const STORAGE_KEY = 'taskflow-tasks'
 
-/**
- * Loads the task list from localStorage.
- * Returns an empty array if no data exists or parsing fails.
- * @returns {object[]} Array of task objects.
- */
 export function loadTasks() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
@@ -14,17 +9,19 @@ export function loadTasks() {
       console.warn('Stored tasks data is not an array, resetting.')
       return []
     }
-    return parsed
+    // Backfill missing fields for tasks created before category/priority existed
+    return parsed.map((task) => ({
+      priority: 'medium',
+      category: 'General',
+      dueDate: null,
+      ...task,
+    }))
   } catch (error) {
     console.error('Failed to load tasks from localStorage:', error)
     return []
   }
 }
 
-/**
- * Saves the task list to localStorage.
- * @param {object[]} tasks - Array of task objects to persist.
- */
 export function saveTasks(tasks) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
