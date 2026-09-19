@@ -4,10 +4,11 @@ import TaskList from '../components/TaskList'
 import TaskFilter from '../components/TaskFilter'
 import SearchBar from '../components/SearchBar'
 import StatsDashboard from '../components/StatsDashboard'
+import StatsDashboardSkeleton from '../components/StatsDashboardSkeleton'
 import { useTasks } from '../context/TaskContext'
 
 function Home() {
-  const { tasks } = useTasks()
+  const { tasks, isLoading } = useTasks()
   const [filter, setFilter] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -28,7 +29,11 @@ function Home() {
       <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
         My Tasks
       </h2>
-      <StatsDashboard tasks={tasks} />
+      {isLoading ? (
+        <StatsDashboardSkeleton />
+      ) : (
+        <StatsDashboard tasks={tasks} />
+      )}
       <div className="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm space-y-4">
         <TaskForm />
         <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
@@ -36,7 +41,9 @@ function Home() {
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
         </div>
       </div>
-      <TaskList tasks={filteredTasks} hasActiveSearch={hasActiveSearch} />
+      {!isLoading && (
+        <TaskList tasks={filteredTasks} hasActiveSearch={hasActiveSearch} />
+      )}
     </div>
   )
 }
