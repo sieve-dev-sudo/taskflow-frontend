@@ -1,20 +1,28 @@
 import { useState } from 'react'
 import { Pencil, Trash2, AlertTriangle } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
+import { useToast } from '../context/ToastContext'
 import PriorityBadge from './PriorityBadge'
 import CategoryBadge from './CategoryBadge'
 import { formatDate, isOverdue } from '../utils/date'
 
 function TaskItem({ task }) {
   const { toggleTask, deleteTask, editTask } = useTasks()
+  const { showToast } = useToast()
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(task.title)
 
   const handleSave = () => {
-    if (editValue.trim()) {
+    if (editValue.trim() && editValue.trim() !== task.title) {
       editTask(task.id, editValue.trim())
+      showToast('Task updated', 'edit')
     }
     setIsEditing(false)
+  }
+
+  const handleDelete = () => {
+    deleteTask(task.id)
+    showToast('Task deleted', 'delete')
   }
 
   const overdue = !task.completed && isOverdue(task.dueDate)
@@ -84,7 +92,7 @@ function TaskItem({ task }) {
           <Pencil className="w-4 h-4" />
         </button>
         <button
-          onClick={() => deleteTask(task.id)}
+          onClick={handleDelete}
           aria-label={`Delete task: ${task.title}`}
           className="text-red-600 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded p-1"
         >
