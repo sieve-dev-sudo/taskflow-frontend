@@ -2,9 +2,13 @@ import { AnimatePresence, motion } from 'framer-motion'
 import TaskItem from './TaskItem'
 import EmptyState from './EmptyState'
 
-function TaskList({ tasks }) {
+function TaskList({ tasks, hasActiveSearch = false }) {
   if (tasks.length === 0) {
-    return <EmptyState message="No tasks yet. Add one above!" />
+    return hasActiveSearch ? (
+      <EmptyState message="No tasks match your search" variant="search" />
+    ) : (
+      <EmptyState message="No tasks yet. Add one above!" />
+    )
   }
 
   return (
