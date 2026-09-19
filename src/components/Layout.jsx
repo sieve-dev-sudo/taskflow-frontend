@@ -1,5 +1,6 @@
 import Header from './Header'
 import Footer from './Footer'
+import ToastContainer from './ToastContainer'
 
 function Layout({ children }) {
   return (
@@ -9,6 +10,7 @@ function Layout({ children }) {
         {children}
       </main>
       <Footer />
+      <ToastContainer />
     </div>
   )
 }

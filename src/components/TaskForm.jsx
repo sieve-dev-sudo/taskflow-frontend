@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
+import { useToast } from '../context/ToastContext'
 import { CATEGORIES } from '../utils/categories'
 
 function TaskForm() {
@@ -9,11 +10,13 @@ function TaskForm() {
   const [dueDate, setDueDate] = useState('')
   const [category, setCategory] = useState('General')
   const { addTask } = useTasks()
+  const { showToast } = useToast()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!title.trim()) return
     addTask(title.trim(), priority, dueDate || null, category)
+    showToast('Task added!', 'success')
     setTitle('')
     setPriority('medium')
     setDueDate('')
@@ -22,7 +25,6 @@ function TaskForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3 mb-4" aria-label="Add new task form">
-      {/* ជួរទី ១: Title (ពេញទទឹង) */}
       <div>
         <label htmlFor="task-title" className="sr-only">Task title</label>
         <input
@@ -36,7 +38,6 @@ function TaskForm() {
         />
       </div>
 
-      {/* ជួរទី ២: Category, Priority, Due Date, Add Button */}
       <div className="flex flex-col sm:flex-row gap-2">
         <label htmlFor="task-category" className="sr-only">Category</label>
         <select
