@@ -21,6 +21,8 @@ function Home() {
       task.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
 
+  const hasActiveSearch = searchQuery.trim().length > 0 && tasks.length > 0
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
@@ -34,7 +36,7 @@ function Home() {
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
         </div>
       </div>
-      <TaskList tasks={filteredTasks} />
+      <TaskList tasks={filteredTasks} hasActiveSearch={hasActiveSearch} />
     </div>
   )
 }
