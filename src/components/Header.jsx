@@ -1,8 +1,11 @@
 import { Link, NavLink } from 'react-router-dom'
-import { ListTodo } from 'lucide-react'
+import { ListTodo, Trash2 } from 'lucide-react'
+import { useTasks } from '../context/TaskContext'
 import ThemeToggle from './ThemeToggle'
 
 function Header() {
+  const { trashedTasks } = useTasks()
+
   return (
     <header className="w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
       <div className="max-w-4xl mx-auto px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
@@ -28,6 +31,20 @@ function Header() {
               }
             >
               About
+            </NavLink>
+            <NavLink
+              to="/trash"
+              aria-label={`Trash, ${trashedTasks.length} deleted tasks`}
+              className={({ isActive }) =>
+                `relative flex items-center ${isActive ? 'text-indigo-600 font-medium' : 'hover:text-primary'}`
+              }
+            >
+              <Trash2 className="w-4 h-4" />
+              {trashedTasks.length > 0 && (
+                <span className="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 text-[10px] font-semibold text-white bg-red-600 rounded-full">
+                  {trashedTasks.length}
+                </span>
+              )}
             </NavLink>
           </nav>
           <ThemeToggle />
