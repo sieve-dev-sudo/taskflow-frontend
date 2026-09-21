@@ -9,11 +9,12 @@ export function loadTasks() {
       console.warn('Stored tasks data is not an array, resetting.')
       return []
     }
-    // Backfill missing fields for tasks created before category/priority existed
     return parsed.map((task) => ({
       priority: 'medium',
       category: 'General',
       dueDate: null,
+      deleted: false,
+      deletedAt: null,
       ...task,
     }))
   } catch (error) {

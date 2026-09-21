@@ -22,7 +22,7 @@ function TaskItem({ task }) {
 
   const handleDelete = () => {
     deleteTask(task.id)
-    showToast('Task deleted', 'delete')
+    showToast('Task moved to trash', 'delete')
   }
 
   const overdue = !task.completed && isOverdue(task.dueDate)

@@ -26,6 +26,8 @@ export function TaskProvider({ children }) {
       priority,
       dueDate,
       category,
+      deleted: false,
+      deletedAt: null,
       createdAt: new Date().toISOString(),
     }
     setTasks((prev) => [...prev, newTask])
@@ -39,10 +41,6 @@ export function TaskProvider({ children }) {
     )
   }
 
-  const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id))
-  }
-
   const editTask = (id, newTitle) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -51,13 +49,50 @@ export function TaskProvider({ children }) {
     )
   }
 
+  /** Moves a task to the trash instead of removing it right away. */
+  const softDeleteTask = (id) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id
+          ? { ...task, deleted: true, deletedAt: new Date().toISOString() }
+          : task
+      )
+    )
+  }
+
+  /** Brings a trashed task back to the active task list. */
+  const restoreTask = (id) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, deleted: false, deletedAt: null } : task
+      )
+    )
+  }
+
+  /** Removes a task from storage permanently. */
+  const permanentlyDeleteTask = (id) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id))
+  }
+
+  /** Permanently removes every task currently in the trash. */
+  const emptyTrash = () => {
+    setTasks((prev) => prev.filter((task) => !task.deleted))
+  }
+
+  const activeTasks = tasks.filter((task) => !task.deleted)
+  const trashedTasks = tasks.filter((task) => task.deleted)
+
   const value = {
-    tasks,
+    tasks: activeTasks,
+    trashedTasks,
     isLoading,
     addTask,
     toggleTask,
-    deleteTask,
     editTask,
+    deleteTask: softDeleteTask,
+    restoreTask,
+    permanentlyDeleteTask,
+    emptyTrash,
   }
 
   return (
