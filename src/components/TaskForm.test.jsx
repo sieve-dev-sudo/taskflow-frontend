@@ -2,15 +2,18 @@ import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import TaskForm from './TaskForm'
 import { TaskProvider } from '../context/TaskContext'
+import { ToastProvider } from '../context/ToastContext'
 
 describe('TaskForm', () => {
   it('renders input and add button', () => {
     render(
-      <TaskProvider>
-        <TaskForm />
-      </TaskProvider>
+      <ToastProvider>
+        <TaskProvider>
+          <TaskForm />
+        </TaskProvider>
+      </ToastProvider>
     )
-    expect(screen.getByPlaceholderText('Add a new task...')).toBeInTheDocument()
-    expect(screen.getByText('Add')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('What needs to be done?')).toBeInTheDocument()
+    expect(screen.getByText('Add Task')).toBeInTheDocument()
   })
 })
