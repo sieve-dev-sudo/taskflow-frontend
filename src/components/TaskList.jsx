@@ -18,9 +18,9 @@ function TaskList({ tasks, hasActiveSearch = false }) {
           <motion.div
             key={task.id}
             initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ duration: 0.2 }}
+            animate={{ opacity: 1, y: 0, x: 0, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, x: 120, y: -60, scale: 0.4, rotate: 20 }}
+            transition={{ duration: 0.35, ease: 'easeIn' }}
           >
             <TaskItem task={task} />
           </motion.div>
