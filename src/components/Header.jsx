@@ -14,12 +14,12 @@ function Header() {
           TaskFlow
         </Link>
         <div className="flex items-center gap-3 sm:gap-4">
-          <nav className="flex gap-3 sm:gap-4 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+          <nav className="flex items-center gap-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             <NavLink
               to="/"
               end
               className={({ isActive }) =>
-                isActive ? 'text-indigo-600 font-medium' : 'hover:text-primary'
+                `px-2 py-1 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
               }
             >
               Home
@@ -27,7 +27,7 @@ function Header() {
             <NavLink
               to="/about"
               className={({ isActive }) =>
-                isActive ? 'text-indigo-600 font-medium' : 'hover:text-primary'
+                `px-2 py-1 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
               }
             >
               About
@@ -36,12 +36,12 @@ function Header() {
               to="/trash"
               aria-label={`Trash, ${trashedTasks.length} deleted tasks`}
               className={({ isActive }) =>
-                `relative flex items-center ${isActive ? 'text-indigo-600 font-medium' : 'hover:text-primary'}`
+                `relative flex items-center justify-center w-8 h-8 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
               }
             >
               <Trash2 className="w-4 h-4" />
               {trashedTasks.length > 0 && (
-                <span className="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 text-[10px] font-semibold text-white bg-red-600 rounded-full">
+                <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-[10px] font-semibold text-white bg-red-600 rounded-full">
                   {trashedTasks.length}
                 </span>
               )}
