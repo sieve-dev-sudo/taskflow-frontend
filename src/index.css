@@ -10,6 +10,10 @@
   --color-text-dark: #f1f5f9;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 * {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
