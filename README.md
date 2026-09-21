@@ -15,17 +15,24 @@
 ## ✨ Features
 
 - បន្ថែម, កែប្រែ, លុប Tasks (Add / Edit / Delete)
-- កំណត់ Priority Level **Low / Medium / High** មាន Badge ពណ៌ខុសៗគ្នា
+- កំណត់ Priority Level Low / Medium / High មាន Badge ពណ៌ខុសៗគ្នា
+- កំណត់ Category សម្រាប់ Task នីមួយៗ (General, Work, Personal, Shopping, Health)
 - កំណត់ Due Date សម្រាប់ Task នីមួយៗ ព្រមទាំង Overdue Indicator
-- Filter តាមស្ថានភាព **All / Active / Completed**
+- Filter តាមស្ថានភាព All / Active / Completed
 - Search Bar រកមើល Task ភ្លាមៗតាមឈ្មោះ
 - Stats Dashboard បង្ហាញ Progress Bar និងភាគរយបញ្ចប់ការងារ
+- Trash Bin, Soft Delete, Restore, និង Permanent Delete
+- Toast Notifications សម្រាប់រាល់សកម្មភាព (Add, Edit, Delete, Restore)
+- Multi Page Navigation (Home, About, Trash) ដោយ React Router
 - Dark Mode Toggle ព្រមទាំងចងចាំ Preference
 - រក្សាទុក Tasks ដោយស្វ័យប្រវត្តិទៅ localStorage
+- Loading Skeleton Placeholder ពេលបើក App លើកដំបូង
 - Animation រលូនដោយ Framer Motion
 - Responsive ពេញលេញ គ្រប់ទំហំអេក្រង់ (Mobile / Tablet / Desktop)
+- Accessibility, Keyboard Navigation, ARIA Labels, Focus States
 - Error Boundary និង Empty State Handling
 - មាន Unit Test ដោយ Vitest + Testing Library
+- Demo Frontend, ប្រើ localStorage ទាំងស្រុង គ្មាន Backend Dependency
 
 ---
 
@@ -38,64 +45,82 @@ taskflow-frontend/
 │   └── icons.svg
 ├── src/
 │   ├── components/
-│   │   ├── Header.jsx           → Navbar + Theme Toggle
-│   │   ├── Footer.jsx           → Footer
-│   │   ├── Layout.jsx           → Layout Wrapper (Header + Main + Footer)
-│   │   ├── TaskForm.jsx         → Form បន្ថែម Task (Title, Priority, Due Date)
-│   │   ├── TaskForm.test.jsx    → Unit Test សម្រាប់ TaskForm
-│   │   ├── TaskItem.jsx         → Task មួយៗ (Edit/Delete/Toggle/Badge)
-│   │   ├── TaskList.jsx         → List Tasks ទាំងអស់ (មាន Animation)
-│   │   ├── TaskFilter.jsx       → Filter Tabs (All/Active/Completed)
-│   │   ├── SearchBar.jsx        → Search Box
-│   │   ├── StatsDashboard.jsx   → Progress Bar + Stats Summary
-│   │   ├── PriorityBadge.jsx    → Badge បង្ហាញ Priority (Low/Medium/High)
-│   │   ├── ThemeToggle.jsx      → ប៊ូតុងប្តូរ Dark/Light Mode
-│   │   ├── ErrorBoundary.jsx    → ចាប់ Error ទាំងអស់ក្នុង App
-│   │   └── EmptyState.jsx       → សារពេល List ទទេ
+│   │   ├── Header.jsx
+│   │   ├── Footer.jsx
+│   │   ├── Layout.jsx
+│   │   ├── TaskForm.jsx
+│   │   ├── TaskForm.test.jsx
+│   │   ├── TaskItem.jsx
+│   │   ├── TaskItem.test.jsx
+│   │   ├── TaskList.jsx
+│   │   ├── TaskFilter.jsx
+│   │   ├── SearchBar.jsx
+│   │   ├── StatsDashboard.jsx
+│   │   ├── StatsDashboardSkeleton.jsx
+│   │   ├── PriorityBadge.jsx
+│   │   ├── CategoryBadge.jsx
+│   │   ├── ThemeToggle.jsx
+│   │   ├── ToastContainer.jsx
+│   │   ├── ErrorBoundary.jsx
+│   │   └── EmptyState.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── About.jsx
+│   │   └── Trash.jsx
 │   ├── context/
-│   │   ├── TaskContext.jsx      → State Management សម្រាប់ Tasks (CRUD)
-│   │   └── ThemeContext.jsx     → State Management សម្រាប់ Dark/Light Theme
+│   │   ├── TaskContext.jsx
+│   │   ├── TaskContext.test.jsx
+│   │   ├── ThemeContext.jsx
+│   │   └── ToastContext.jsx
 │   ├── hooks/
-│   │   └── useTasks.js          → Custom Hook (Re-export ពី TaskContext)
+│   │   └── useTasks.js
 │   ├── utils/
-│   │   ├── localStorage.js      → Save/Load Tasks ទៅ localStorage
-│   │   ├── date.js              → Format Date + Overdue Check
-│   │   └── date.test.js         → Unit Test សម្រាប់ date utilities
+│   │   ├── localStorage.js
+│   │   ├── date.js
+│   │   ├── date.test.js
+│   │   └── categories.js
 │   ├── test/
-│   │   └── setup.js             → Test Setup (jest-dom)
-│   ├── App.jsx                  → Main App Component
-│   ├── App.css                  → (មិនប្រើទៀត — ជំនួសដោយ Tailwind)
-│   ├── index.css                → Tailwind Import + Theme Variables
-│   └── main.jsx                 → App Entry Point (Providers + Render)
+│   │   └── setup.js
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
 ├── .gitignore
-├── eslint.config.js             → ESLint Configuration
-├── index.html                   → HTML Entry Point
-├── LICENSE                      → MIT License
-├── package.json                 → Dependencies + Scripts
+├── eslint.config.js
+├── index.html
+├── LICENSE
+├── package.json
 ├── package-lock.json
 ├── README.md
-└── vite.config.js               → Vite + Tailwind + Vitest Configuration
+└── vite.config.js
 ```
 
 ---
 
-## 🚀 How to Run
+## 🚀 How to Run Locally
 
-1. Clone Repository នេះ:
+1. Clone Repository នេះ
+
 ```bash
 git clone <url-repo>
 cd taskflow-frontend
 ```
-2. ដំឡើង Dependencies:
+
+2. ដំឡើង Dependencies
+
 ```bash
 npm install
 ```
-3. Run Development Server:
+
+3. Run Development Server
+
 ```bash
 npm run dev
 ```
+
 4. បើក Browser ចូល `http://localhost:5173`
-5. ដើម្បី Run Tests:
+
+5. ដើម្បី Run Tests
+
 ```bash
 npm run test
 ```
