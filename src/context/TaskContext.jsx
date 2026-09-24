@@ -22,6 +22,7 @@ export function TaskProvider({ children }) {
     const newTask = {
       id: Date.now().toString(),
       title,
+      notes: '',
       completed: false,
       priority,
       dueDate,
@@ -49,7 +50,13 @@ export function TaskProvider({ children }) {
     )
   }
 
-  /** Moves a task to the trash instead of removing it right away. */
+  /** Updates a task's notes field. */
+  const updateNotes = (id, notes) => {
+    setTasks((prev) =>
+      prev.map((task) => (task.id === id ? { ...task, notes } : task))
+    )
+  }
+
   const softDeleteTask = (id) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -60,7 +67,6 @@ export function TaskProvider({ children }) {
     )
   }
 
-  /** Brings a trashed task back to the active task list. */
   const restoreTask = (id) => {
     setTasks((prev) =>
       prev.map((task) =>
@@ -69,12 +75,10 @@ export function TaskProvider({ children }) {
     )
   }
 
-  /** Removes a task from storage permanently. */
   const permanentlyDeleteTask = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id))
   }
 
-  /** Permanently removes every task currently in the trash. */
   const emptyTrash = () => {
     setTasks((prev) => prev.filter((task) => !task.deleted))
   }
@@ -89,6 +93,7 @@ export function TaskProvider({ children }) {
     addTask,
     toggleTask,
     editTask,
+    updateNotes,
     deleteTask: softDeleteTask,
     restoreTask,
     permanentlyDeleteTask,
