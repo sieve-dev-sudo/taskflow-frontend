@@ -15,15 +15,17 @@
 ## ✨ Features
 
 - បន្ថែម, កែប្រែ, លុប Tasks (Add / Edit / Delete)
+- បន្ថែម Notes លម្អិតសម្រាប់ Task នីមួយៗ ដោយចុចលើ Task ដើម្បីបើក Detail Modal
 - កំណត់ Priority Level Low / Medium / High មាន Badge ពណ៌ខុសៗគ្នា
 - កំណត់ Category សម្រាប់ Task នីមួយៗ (General, Work, Personal, Shopping, Health)
 - កំណត់ Due Date សម្រាប់ Task នីមួយៗ ព្រមទាំង Overdue Indicator
 - Filter តាមស្ថានភាព All / Active / Completed
 - Search Bar រកមើល Task ភ្លាមៗតាមឈ្មោះ
 - Stats Dashboard បង្ហាញ Progress Bar និងភាគរយបញ្ចប់ការងារ
+- Analytics Page ជាមួយ Pie Chart, Bar Chart, និង Line Chart សម្រាប់មើល Trend
 - Trash Bin, Soft Delete, Restore, និង Permanent Delete
 - Toast Notifications សម្រាប់រាល់សកម្មភាព (Add, Edit, Delete, Restore)
-- Multi Page Navigation (Home, About, Trash) ដោយ React Router
+- Multi Page Navigation (Home, Analytics, About, Trash) ដោយ React Router
 - Dark Mode Toggle ព្រមទាំងចងចាំ Preference
 - រក្សាទុក Tasks ដោយស្វ័យប្រវត្តិទៅ localStorage
 - Loading Skeleton Placeholder ពេលបើក App លើកដំបូង
@@ -52,6 +54,7 @@ taskflow-frontend/
 │   │   ├── TaskForm.test.jsx
 │   │   ├── TaskItem.jsx
 │   │   ├── TaskItem.test.jsx
+│   │   ├── TaskDetailModal.jsx
 │   │   ├── TaskList.jsx
 │   │   ├── TaskFilter.jsx
 │   │   ├── SearchBar.jsx
@@ -59,12 +62,16 @@ taskflow-frontend/
 │   │   ├── StatsDashboardSkeleton.jsx
 │   │   ├── PriorityBadge.jsx
 │   │   ├── CategoryBadge.jsx
+│   │   ├── CategoryPieChart.jsx
+│   │   ├── PriorityBarChart.jsx
+│   │   ├── CompletionTrendChart.jsx
 │   │   ├── ThemeToggle.jsx
 │   │   ├── ToastContainer.jsx
 │   │   ├── ErrorBoundary.jsx
 │   │   └── EmptyState.jsx
 │   ├── pages/
 │   │   ├── Home.jsx
+│   │   ├── Analytics.jsx
 │   │   ├── About.jsx
 │   │   └── Trash.jsx
 │   ├── context/
@@ -78,7 +85,8 @@ taskflow-frontend/
 │   │   ├── localStorage.js
 │   │   ├── date.js
 │   │   ├── date.test.js
-│   │   └── categories.js
+│   │   ├── categories.js
+│   │   └── analytics.js
 │   ├── test/
 │   │   └── setup.js
 │   ├── App.jsx
