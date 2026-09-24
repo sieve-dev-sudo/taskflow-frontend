@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
-import { ListTodo, Trash2 } from 'lucide-react'
+import { ListTodo, Trash2, BarChart3 } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import ThemeToggle from './ThemeToggle'
 
@@ -23,6 +23,15 @@ function Header() {
               }
             >
               Home
+            </NavLink>
+            <NavLink
+              to="/analytics"
+              className={({ isActive }) =>
+                `flex items-center justify-center w-8 h-8 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
+              }
+              aria-label="Analytics"
+            >
+              <BarChart3 className="w-4 h-4" />
             </NavLink>
             <NavLink
               to="/about"
