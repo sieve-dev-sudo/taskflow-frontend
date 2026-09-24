@@ -15,6 +15,7 @@ export function loadTasks() {
       dueDate: null,
       deleted: false,
       deletedAt: null,
+      notes: '',
       ...task,
     }))
   } catch (error) {
