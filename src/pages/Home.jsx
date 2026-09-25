@@ -5,12 +5,16 @@ import TaskFilter from '../components/TaskFilter'
 import SearchBar from '../components/SearchBar'
 import StatsDashboard from '../components/StatsDashboard'
 import StatsDashboardSkeleton from '../components/StatsDashboardSkeleton'
+import BulkActionBar from '../components/BulkActionBar'
 import { useTasks } from '../context/TaskContext'
+import { useToast } from '../context/ToastContext'
 
 function Home() {
-  const { tasks, isLoading } = useTasks()
+  const { tasks, isLoading, bulkComplete, bulkDelete } = useTasks()
+  const { showToast } = useToast()
   const [filter, setFilter] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedIds, setSelectedIds] = useState([])
 
   const filteredTasks = tasks
     .filter((task) => {
@@ -23,6 +27,24 @@ function Home() {
     )
 
   const hasActiveSearch = searchQuery.trim().length > 0 && tasks.length > 0
+
+  const handleToggleSelect = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    )
+  }
+
+  const handleBulkComplete = () => {
+    bulkComplete(selectedIds)
+    showToast(`${selectedIds.length} task(s) completed`, 'success')
+    setSelectedIds([])
+  }
+
+  const handleBulkDelete = () => {
+    bulkDelete(selectedIds)
+    showToast(`${selectedIds.length} task(s) moved to trash`, 'delete')
+    setSelectedIds([])
+  }
 
   return (
     <div className="space-y-6">
@@ -41,8 +63,19 @@ function Home() {
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
         </div>
       </div>
+      <BulkActionBar
+        selectedCount={selectedIds.length}
+        onComplete={handleBulkComplete}
+        onDelete={handleBulkDelete}
+        onClear={() => setSelectedIds([])}
+      />
       {!isLoading && (
-        <TaskList tasks={filteredTasks} hasActiveSearch={hasActiveSearch} />
+        <TaskList
+          tasks={filteredTasks}
+          hasActiveSearch={hasActiveSearch}
+          selectedIds={selectedIds}
+          onToggleSelect={handleToggleSelect}
+        />
       )}
     </div>
   )
