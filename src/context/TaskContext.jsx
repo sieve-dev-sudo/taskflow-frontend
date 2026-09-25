@@ -50,7 +50,6 @@ export function TaskProvider({ children }) {
     )
   }
 
-  /** Updates a task's notes field. */
   const updateNotes = (id, notes) => {
     setTasks((prev) =>
       prev.map((task) => (task.id === id ? { ...task, notes } : task))
@@ -83,6 +82,34 @@ export function TaskProvider({ children }) {
     setTasks((prev) => prev.filter((task) => !task.deleted))
   }
 
+  /** Marks multiple tasks as completed at once. */
+  const bulkComplete = (ids) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        ids.includes(task.id) ? { ...task, completed: true } : task
+      )
+    )
+  }
+
+  /** Moves multiple tasks to the trash at once. */
+  const bulkDelete = (ids) => {
+    const now = new Date().toISOString()
+    setTasks((prev) =>
+      prev.map((task) =>
+        ids.includes(task.id) ? { ...task, deleted: true, deletedAt: now } : task
+      )
+    )
+  }
+
+  /** Restores multiple tasks from the trash at once. */
+  const bulkRestore = (ids) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        ids.includes(task.id) ? { ...task, deleted: false, deletedAt: null } : task
+      )
+    )
+  }
+
   const activeTasks = tasks.filter((task) => !task.deleted)
   const trashedTasks = tasks.filter((task) => task.deleted)
 
@@ -98,6 +125,9 @@ export function TaskProvider({ children }) {
     restoreTask,
     permanentlyDeleteTask,
     emptyTrash,
+    bulkComplete,
+    bulkDelete,
+    bulkRestore,
   }
 
   return (
