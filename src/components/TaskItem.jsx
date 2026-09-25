@@ -7,7 +7,7 @@ import CategoryBadge from './CategoryBadge'
 import TaskDetailModal from './TaskDetailModal'
 import { formatDate, isOverdue } from '../utils/date'
 
-function TaskItem({ task }) {
+function TaskItem({ task, isSelected = false, onToggleSelect }) {
   const { toggleTask, deleteTask, editTask, restoreTask } = useTasks()
   const { showToast } = useToast()
   const [isEditing, setIsEditing] = useState(false)
@@ -39,9 +39,23 @@ function TaskItem({ task }) {
   return (
     <>
       <div
-        className="flex items-start sm:items-center gap-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+        className={`flex items-start sm:items-center gap-3 p-3 border rounded-lg transition-colors ${
+          isSelected
+            ? 'border-indigo-300 dark:border-indigo-700 bg-indigo-50/50 dark:bg-indigo-950/30'
+            : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+        }`}
         role="listitem"
       >
+        {onToggleSelect && (
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={() => onToggleSelect(task.id)}
+            aria-label={`Select task: ${task.title}`}
+            className="w-4 h-4 mt-1 sm:mt-0 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          />
+        )}
+
         <input
           type="checkbox"
           checked={task.completed}
