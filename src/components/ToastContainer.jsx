@@ -15,7 +15,12 @@ const COLORS = {
 }
 
 function ToastContainer() {
-  const { toasts } = useToast()
+  const { toasts, dismissToast } = useToast()
+
+  const handleAction = (toast) => {
+    toast.action?.onClick()
+    dismissToast(toast.id)
+  }
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
@@ -30,10 +35,18 @@ function ToastContainer() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, x: 100 }}
               transition={{ duration: 0.2 }}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-white text-sm shadow-lg ${color}`}
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-white text-sm shadow-lg ${color}`}
             >
               <Icon className="w-4 h-4 shrink-0" />
-              {toast.message}
+              <span>{toast.message}</span>
+              {toast.action && (
+                <button
+                  onClick={() => handleAction(toast)}
+                  className="font-semibold underline underline-offset-2 hover:no-underline focus:outline-none"
+                >
+                  {toast.action.label}
+                </button>
+              )}
             </motion.div>
           )
         })}
