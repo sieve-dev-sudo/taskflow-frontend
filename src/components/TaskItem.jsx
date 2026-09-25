@@ -8,7 +8,7 @@ import TaskDetailModal from './TaskDetailModal'
 import { formatDate, isOverdue } from '../utils/date'
 
 function TaskItem({ task }) {
-  const { toggleTask, deleteTask, editTask } = useTasks()
+  const { toggleTask, deleteTask, editTask, restoreTask } = useTasks()
   const { showToast } = useToast()
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(task.title)
@@ -24,7 +24,13 @@ function TaskItem({ task }) {
 
   const handleDelete = () => {
     deleteTask(task.id)
-    showToast('Task moved to trash', 'delete')
+    showToast('Task moved to trash', 'delete', {
+      duration: 5000,
+      action: {
+        label: 'Undo',
+        onClick: () => restoreTask(task.id),
+      },
+    })
   }
 
   const overdue = !task.completed && isOverdue(task.dueDate)
