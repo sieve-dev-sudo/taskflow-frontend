@@ -1,6 +1,6 @@
 <div align="center">
 
-# TaskFlow : Modern Task Manager
+# TaskFlow
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
@@ -21,9 +21,11 @@
 - កំណត់ Due Date សម្រាប់ Task នីមួយៗ ព្រមទាំង Overdue Indicator
 - Filter តាមស្ថានភាព All / Active / Completed
 - Search Bar រកមើល Task ភ្លាមៗតាមឈ្មោះ
+- Bulk Actions, ជ្រើសរើស Tasks ច្រើន ដើម្បី Complete ឬ Delete ព្រមគ្នា
 - Stats Dashboard បង្ហាញ Progress Bar និងភាគរយបញ្ចប់ការងារ
 - Analytics Page ជាមួយ Pie Chart, Bar Chart, និង Line Chart សម្រាប់មើល Trend
 - Trash Bin, Soft Delete, Restore, និង Permanent Delete
+- Undo Action ភ្លាមៗពេលលុប Task ដោយចុច Undo ក្នុង Toast
 - Toast Notifications សម្រាប់រាល់សកម្មភាព (Add, Edit, Delete, Restore)
 - Multi Page Navigation (Home, Analytics, About, Trash) ដោយ React Router
 - Dark Mode Toggle ព្រមទាំងចងចាំ Preference
@@ -58,6 +60,7 @@ taskflow-frontend/
 │   │   ├── TaskList.jsx
 │   │   ├── TaskFilter.jsx
 │   │   ├── SearchBar.jsx
+│   │   ├── BulkActionBar.jsx
 │   │   ├── StatsDashboard.jsx
 │   │   ├── StatsDashboardSkeleton.jsx
 │   │   ├── PriorityBadge.jsx
