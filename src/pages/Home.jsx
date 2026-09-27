@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CheckSquare } from 'lucide-react'
 import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
 import TaskFilter from '../components/TaskFilter'
@@ -14,6 +15,7 @@ function Home() {
   const { showToast } = useToast()
   const [filter, setFilter] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectionMode, setSelectionMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState([])
 
   const filteredTasks = tasks
@@ -34,23 +36,47 @@ function Home() {
     )
   }
 
+  const handleToggleSelectionMode = () => {
+    setSelectionMode((prev) => !prev)
+    setSelectedIds([])
+  }
+
   const handleBulkComplete = () => {
     bulkComplete(selectedIds)
     showToast(`${selectedIds.length} task(s) completed`, 'success')
     setSelectedIds([])
+    setSelectionMode(false)
   }
 
   const handleBulkDelete = () => {
     bulkDelete(selectedIds)
     showToast(`${selectedIds.length} task(s) moved to trash`, 'delete')
     setSelectedIds([])
+    setSelectionMode(false)
   }
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-        My Tasks
-      </h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+          My Tasks
+        </h2>
+        {tasks.length > 0 && (
+          <button
+            onClick={handleToggleSelectionMode}
+            aria-pressed={selectionMode}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+              selectionMode
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+          >
+            <CheckSquare className="w-4 h-4" />
+            {selectionMode ? 'Cancel' : 'Select'}
+          </button>
+        )}
+      </div>
+
       {isLoading ? (
         <StatsDashboardSkeleton />
       ) : (
@@ -73,6 +99,7 @@ function Home() {
         <TaskList
           tasks={filteredTasks}
           hasActiveSearch={hasActiveSearch}
+          selectionMode={selectionMode}
           selectedIds={selectedIds}
           onToggleSelect={handleToggleSelect}
         />
