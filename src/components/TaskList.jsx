@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import TaskItem from './TaskItem'
 import EmptyState from './EmptyState'
 
-function TaskList({ tasks, hasActiveSearch = false, selectedIds = [], onToggleSelect }) {
+function TaskList({ tasks, hasActiveSearch = false, selectionMode = false, selectedIds = [], onToggleSelect }) {
   if (tasks.length === 0) {
     return hasActiveSearch ? (
       <EmptyState message="No tasks match your search" variant="search" />
@@ -24,6 +24,7 @@ function TaskList({ tasks, hasActiveSearch = false, selectedIds = [], onToggleSe
           >
             <TaskItem
               task={task}
+              selectionMode={selectionMode}
               isSelected={selectedIds.includes(task.id)}
               onToggleSelect={onToggleSelect}
             />
