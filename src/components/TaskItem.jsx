@@ -7,7 +7,7 @@ import CategoryBadge from './CategoryBadge'
 import TaskDetailModal from './TaskDetailModal'
 import { formatDate, isOverdue } from '../utils/date'
 
-function TaskItem({ task, isSelected = false, onToggleSelect }) {
+function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSelect }) {
   const { toggleTask, deleteTask, editTask, restoreTask } = useTasks()
   const { showToast } = useToast()
   const [isEditing, setIsEditing] = useState(false)
@@ -46,7 +46,7 @@ function TaskItem({ task, isSelected = false, onToggleSelect }) {
         }`}
         role="listitem"
       >
-        {onToggleSelect && (
+        {selectionMode ? (
           <input
             type="checkbox"
             checked={isSelected}
@@ -54,15 +54,15 @@ function TaskItem({ task, isSelected = false, onToggleSelect }) {
             aria-label={`Select task: ${task.title}`}
             className="w-4 h-4 mt-1 sm:mt-0 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
           />
+        ) : (
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => toggleTask(task.id)}
+            aria-label={`Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
+            className="w-4 h-4 mt-1 sm:mt-0 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          />
         )}
-
-        <input
-          type="checkbox"
-          checked={task.completed}
-          onChange={() => toggleTask(task.id)}
-          aria-label={`Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
-          className="w-4 h-4 mt-1 sm:mt-0 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-        />
 
         <div className="flex-1 min-w-0">
           {isEditing ? (
@@ -79,10 +79,10 @@ function TaskItem({ task, isSelected = false, onToggleSelect }) {
           ) : (
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <button
-                onClick={() => setShowDetail(true)}
+                onClick={() => (selectionMode ? onToggleSelect(task.id) : setShowDetail(true))}
                 onDoubleClick={(e) => {
                   e.stopPropagation()
-                  setIsEditing(true)
+                  if (!selectionMode) setIsEditing(true)
                 }}
                 className={`text-left focus:outline-none focus-visible:underline ${
                   task.completed
@@ -115,20 +115,24 @@ function TaskItem({ task, isSelected = false, onToggleSelect }) {
         <div className="flex items-center gap-2 shrink-0">
           <CategoryBadge category={task.category} />
           <PriorityBadge priority={task.priority} />
-          <button
-            onClick={() => setIsEditing(true)}
-            aria-label={`Edit task: ${task.title}`}
-            className="text-indigo-600 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded p-1"
-          >
-            <Pencil className="w-4 h-4" />
-          </button>
-          <button
-            onClick={handleDelete}
-            aria-label={`Delete task: ${task.title}`}
-            className="text-red-600 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded p-1"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
+          {!selectionMode && (
+            <>
+              <button
+                onClick={() => setIsEditing(true)}
+                aria-label={`Edit task: ${task.title}`}
+                className="text-indigo-600 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded p-1"
+              >
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleDelete}
+                aria-label={`Delete task: ${task.title}`}
+                className="text-red-600 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded p-1"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </>
+          )}
         </div>
       </div>
 
