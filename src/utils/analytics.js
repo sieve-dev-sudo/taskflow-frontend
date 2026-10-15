@@ -28,9 +28,10 @@ export function getTasksByPriority(tasks) {
 /**
  * Builds a 7-day completion trend ending today.
  * @param {object[]} tasks
+ * @param {string} [locale='en-US'] - Locale used for weekday labels.
  * @returns {{day: string, completed: number}[]}
  */
-export function getCompletionTrend(tasks) {
+export function getCompletionTrend(tasks, locale = 'en-US') {
   const days = []
   for (let i = 6; i >= 0; i--) {
     const date = new Date()
@@ -50,7 +51,7 @@ export function getCompletionTrend(tasks) {
     }).length
 
     return {
-      day: day.toLocaleDateString('en-US', { weekday: 'short' }),
+      day: day.toLocaleDateString(locale, { weekday: 'short' }),
       completed,
     }
   })

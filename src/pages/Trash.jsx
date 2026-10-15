@@ -1,33 +1,35 @@
 import { RotateCcw, XCircle, Trash2 } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import { useToast } from '../context/ToastContext'
+import { useLanguage } from '../context/LanguageContext'
 import EmptyState from '../components/EmptyState'
 import { formatDate } from '../utils/date'
 
 function Trash() {
   const { trashedTasks, restoreTask, permanentlyDeleteTask, emptyTrash } = useTasks()
   const { showToast } = useToast()
+  const { t, locale } = useLanguage()
 
   const handleRestore = (id) => {
     restoreTask(id)
-    showToast('Task restored', 'success')
+    showToast(t('toast.restored'), 'success')
   }
 
   const handlePermanentDelete = (id) => {
     permanentlyDeleteTask(id)
-    showToast('Task permanently deleted', 'delete')
+    showToast(t('toast.permanentlyDeleted'), 'delete')
   }
 
   const handleEmptyTrash = () => {
     emptyTrash()
-    showToast('Trash emptied', 'delete')
+    showToast(t('toast.trashEmptied'), 'delete')
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-          Trash
+          {t('trash.title')}
         </h2>
         {trashedTasks.length > 0 && (
           <button
@@ -35,15 +37,15 @@ function Trash() {
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-red-600 border border-red-200 dark:border-red-900 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
           >
             <Trash2 className="w-4 h-4" />
-            Empty Trash
+            {t('trash.empty')}
           </button>
         )}
       </div>
 
       {trashedTasks.length === 0 ? (
-        <EmptyState message="Trash is empty" />
+        <EmptyState message={t('empty.trash')} />
       ) : (
-        <div className="space-y-2" role="list" aria-label="Trashed tasks">
+        <div className="space-y-2" role="list" aria-label={t('trash.listLabel')}>
           {trashedTasks.map((task) => (
             <div
               key={task.id}
@@ -55,25 +57,25 @@ function Trash() {
                   {task.title}
                 </span>
                 <span className="block text-xs text-slate-400 dark:text-slate-500">
-                  Deleted {formatDate(task.deletedAt)}
+                  {t('trash.deletedOn', { date: formatDate(task.deletedAt, locale) })}
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => handleRestore(task.id)}
-                  aria-label={`Restore task: ${task.title}`}
+                  aria-label={t('trash.restoreLabel', { title: task.title })}
                   className="flex items-center gap-1 text-sm text-indigo-600 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  Restore
+                  {t('trash.restore')}
                 </button>
                 <button
                   onClick={() => handlePermanentDelete(task.id)}
-                  aria-label={`Permanently delete task: ${task.title}`}
+                  aria-label={t('trash.deleteForeverLabel', { title: task.title })}
                   className="flex items-center gap-1 text-sm text-red-600 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded"
                 >
                   <XCircle className="w-4 h-4" />
-                  Delete Forever
+                  {t('trash.deleteForever')}
                 </button>
               </div>
             </div>
