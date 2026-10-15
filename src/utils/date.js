@@ -1,12 +1,13 @@
 /**
  * Formats an ISO date string into a readable format (e.g. "Jan 15, 2026").
  * @param {string|null} dateString - ISO date string or null.
+ * @param {string} [locale='en-US'] - BCP 47 locale such as "en-US" or "km-KH".
  * @returns {string} Formatted date, or empty string if input is falsy.
  */
-export function formatDate(dateString) {
+export function formatDate(dateString, locale = 'en-US') {
   if (!dateString) return ''
   const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString(locale, {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
