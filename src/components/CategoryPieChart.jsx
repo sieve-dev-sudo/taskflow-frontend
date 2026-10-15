@@ -1,12 +1,15 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { useLanguage } from '../context/LanguageContext'
 
 const COLORS = ['#94a3b8', '#3b82f6', '#a855f7', '#ec4899', '#14b8a6']
 
 function CategoryPieChart({ data }) {
+  const { t } = useLanguage()
+
   if (data.length === 0) {
     return (
       <p className="text-center text-sm text-slate-400 py-8">
-        No data to display yet
+        {t('analytics.noData')}
       </p>
     )
   }
