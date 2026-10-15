@@ -11,7 +11,7 @@ function PriorityBarChart({ data }) {
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={data}>
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-        <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+        <XAxis dataKey="label" tick={{ fontSize: 12 }} />
         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
         <Tooltip />
         <Bar dataKey="count" radius={[6, 6, 0, 0]}>
