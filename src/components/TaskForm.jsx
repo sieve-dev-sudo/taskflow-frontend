@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import { useToast } from '../context/ToastContext'
+import { useLanguage } from '../context/LanguageContext'
 import { CATEGORIES } from '../utils/categories'
 
 function TaskForm() {
@@ -11,12 +12,13 @@ function TaskForm() {
   const [category, setCategory] = useState('General')
   const { addTask } = useTasks()
   const { showToast } = useToast()
+  const { t } = useLanguage()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!title.trim()) return
     addTask(title.trim(), priority, dueDate || null, category)
-    showToast('Task added!', 'success')
+    showToast(t('toast.taskAdded'), 'success')
     setTitle('')
     setPriority('medium')
     setDueDate('')
@@ -24,22 +26,22 @@ function TaskForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 mb-4" aria-label="Add new task form">
+    <form onSubmit={handleSubmit} className="space-y-3 mb-4" aria-label={t('form.formLabel')}>
       <div>
-        <label htmlFor="task-title" className="sr-only">Task title</label>
+        <label htmlFor="task-title" className="sr-only">{t('form.titleLabel')}</label>
         <input
           id="task-title"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="What needs to be done?"
+          placeholder={t('form.titlePlaceholder')}
           aria-required="true"
           className="w-full px-4 py-3 text-base border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         />
       </div>
 
       <div className="flex flex-col sm:flex-row gap-2">
-        <label htmlFor="task-category" className="sr-only">Category</label>
+        <label htmlFor="task-category" className="sr-only">{t('form.categoryLabel')}</label>
         <select
           id="task-category"
           value={category}
@@ -47,23 +49,23 @@ function TaskForm() {
           className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         >
           {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
+            <option key={cat} value={cat}>{t(`category.${cat}`)}</option>
           ))}
         </select>
 
-        <label htmlFor="task-priority" className="sr-only">Priority level</label>
+        <label htmlFor="task-priority" className="sr-only">{t('form.priorityLabel')}</label>
         <select
           id="task-priority"
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
           className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
+          <option value="low">{t('priority.low')}</option>
+          <option value="medium">{t('priority.medium')}</option>
+          <option value="high">{t('priority.high')}</option>
         </select>
 
-        <label htmlFor="task-due-date" className="sr-only">Due date</label>
+        <label htmlFor="task-due-date" className="sr-only">{t('form.dueDateLabel')}</label>
         <input
           id="task-due-date"
           type="date"
@@ -74,11 +76,11 @@ function TaskForm() {
 
         <button
           type="submit"
-          aria-label="Add task"
+          aria-label={t('form.addTaskLabel')}
           className="flex items-center justify-center gap-1.5 px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 sm:w-auto w-full"
         >
           <Plus className="w-4 h-4" />
-          Add Task
+          {t('form.addTask')}
         </button>
       </div>
     </form>

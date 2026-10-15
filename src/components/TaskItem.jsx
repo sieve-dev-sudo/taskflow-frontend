@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Pencil, Trash2, AlertTriangle, StickyNote } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import { useToast } from '../context/ToastContext'
+import { useLanguage } from '../context/LanguageContext'
 import PriorityBadge from './PriorityBadge'
 import CategoryBadge from './CategoryBadge'
 import TaskDetailModal from './TaskDetailModal'
@@ -10,6 +11,7 @@ import { formatDate, isOverdue } from '../utils/date'
 function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSelect }) {
   const { toggleTask, deleteTask, editTask, restoreTask } = useTasks()
   const { showToast } = useToast()
+  const { t, locale } = useLanguage()
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(task.title)
   const [showDetail, setShowDetail] = useState(false)
@@ -17,17 +19,17 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
   const handleSave = () => {
     if (editValue.trim() && editValue.trim() !== task.title) {
       editTask(task.id, editValue.trim())
-      showToast('Task updated', 'edit')
+      showToast(t('toast.taskUpdated'), 'edit')
     }
     setIsEditing(false)
   }
 
   const handleDelete = () => {
     deleteTask(task.id)
-    showToast('Task moved to trash', 'delete', {
+    showToast(t('toast.movedToTrash'), 'delete', {
       duration: 5000,
       action: {
-        label: 'Undo',
+        label: t('toast.undo'),
         onClick: () => restoreTask(task.id),
       },
     })
@@ -51,7 +53,7 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
             type="checkbox"
             checked={isSelected}
             onChange={() => onToggleSelect(task.id)}
-            aria-label={`Select task: ${task.title}`}
+            aria-label={t('task.select', { title: task.title })}
             className="w-4 h-4 mt-1 sm:mt-0 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
           />
         ) : (
@@ -59,7 +61,11 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
             type="checkbox"
             checked={task.completed}
             onChange={() => toggleTask(task.id)}
-            aria-label={`Mark "${task.title}" as ${task.completed ? 'incomplete' : 'complete'}`}
+            aria-label={
+              task.completed
+                ? t('task.markIncomplete', { title: task.title })
+                : t('task.markComplete', { title: task.title })
+            }
             className="w-4 h-4 mt-1 sm:mt-0 shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
           />
         )}
@@ -73,7 +79,7 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
               onBlur={handleSave}
               onKeyDown={(e) => e.key === 'Enter' && handleSave()}
               autoFocus
-              aria-label="Edit task title"
+              aria-label={t('task.editInput')}
               className="w-full px-2 py-1 border border-slate-300 dark:border-slate-600 rounded"
             />
           ) : (
@@ -93,7 +99,7 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
                 {task.title}
               </button>
               {hasNotes && (
-                <StickyNote className="w-3.5 h-3.5 text-slate-400" aria-label="Has notes" />
+                <StickyNote className="w-3.5 h-3.5 text-slate-400" aria-label={t('task.hasNotes')} />
               )}
               {task.dueDate && (
                 <span
@@ -104,8 +110,8 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
                   }`}
                 >
                   {overdue && <AlertTriangle className="w-3 h-3" />}
-                  {overdue ? 'Overdue: ' : 'Due: '}
-                  {formatDate(task.dueDate)}
+                  {overdue ? t('task.overdue') : t('task.due')}
+                  {formatDate(task.dueDate, locale)}
                 </span>
               )}
             </div>
@@ -119,14 +125,14 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
             <>
               <button
                 onClick={() => setIsEditing(true)}
-                aria-label={`Edit task: ${task.title}`}
+                aria-label={t('task.editLabel', { title: task.title })}
                 className="text-indigo-600 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded p-1"
               >
                 <Pencil className="w-4 h-4" />
               </button>
               <button
                 onClick={handleDelete}
-                aria-label={`Delete task: ${task.title}`}
+                aria-label={t('task.deleteLabel', { title: task.title })}
                 className="text-red-600 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded p-1"
               >
                 <Trash2 className="w-4 h-4" />

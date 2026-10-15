@@ -9,10 +9,12 @@ import StatsDashboardSkeleton from '../components/StatsDashboardSkeleton'
 import BulkActionBar from '../components/BulkActionBar'
 import { useTasks } from '../context/TaskContext'
 import { useToast } from '../context/ToastContext'
+import { useLanguage } from '../context/LanguageContext'
 
 function Home() {
   const { tasks, isLoading, bulkComplete, bulkDelete } = useTasks()
   const { showToast } = useToast()
+  const { t } = useLanguage()
   const [filter, setFilter] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectionMode, setSelectionMode] = useState(false)
@@ -43,14 +45,14 @@ function Home() {
 
   const handleBulkComplete = () => {
     bulkComplete(selectedIds)
-    showToast(`${selectedIds.length} task(s) completed`, 'success')
+    showToast(t('toast.bulkCompleted', { count: selectedIds.length }), 'success')
     setSelectedIds([])
     setSelectionMode(false)
   }
 
   const handleBulkDelete = () => {
     bulkDelete(selectedIds)
-    showToast(`${selectedIds.length} task(s) moved to trash`, 'delete')
+    showToast(t('toast.bulkTrashed', { count: selectedIds.length }), 'delete')
     setSelectedIds([])
     setSelectionMode(false)
   }
@@ -59,7 +61,7 @@ function Home() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-          My Tasks
+          {t('home.title')}
         </h2>
         {tasks.length > 0 && (
           <button
@@ -72,7 +74,7 @@ function Home() {
             }`}
           >
             <CheckSquare className="w-4 h-4" />
-            {selectionMode ? 'Cancel' : 'Select'}
+            {selectionMode ? t('home.cancel') : t('home.select')}
           </button>
         )}
       </div>

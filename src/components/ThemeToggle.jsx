@@ -1,27 +1,29 @@
 import { motion } from 'framer-motion'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
+import { useLanguage } from '../context/LanguageContext'
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme()
+  const { t } = useLanguage()
 
   return (
     <motion.button
       onClick={toggleTheme}
       whileTap={{ scale: 0.95 }}
       transition={{ duration: 0.15 }}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      aria-label={theme === 'light' ? t('theme.switchToDark') : t('theme.switchToLight')}
       className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
     >
       {theme === 'light' ? (
         <>
           <Moon className="w-4 h-4" />
-          Dark
+          {t('theme.dark')}
         </>
       ) : (
         <>
           <Sun className="w-4 h-4" />
-          Light
+          {t('theme.light')}
         </>
       )}
     </motion.button>

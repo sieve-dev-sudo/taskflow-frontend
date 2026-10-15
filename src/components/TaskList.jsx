@@ -1,18 +1,21 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import TaskItem from './TaskItem'
 import EmptyState from './EmptyState'
+import { useLanguage } from '../context/LanguageContext'
 
 function TaskList({ tasks, hasActiveSearch = false, selectionMode = false, selectedIds = [], onToggleSelect }) {
+  const { t } = useLanguage()
+
   if (tasks.length === 0) {
     return hasActiveSearch ? (
-      <EmptyState message="No tasks match your search" variant="search" />
+      <EmptyState message={t('empty.noResults')} variant="search" />
     ) : (
-      <EmptyState message="No tasks yet. Add one above!" />
+      <EmptyState message={t('empty.noTasks')} />
     )
   }
 
   return (
-    <div className="space-y-2" role="list" aria-label="Task list">
+    <div className="space-y-2" role="list" aria-label={t('task.listLabel')}>
       <AnimatePresence>
         {tasks.map((task) => (
           <motion.div

@@ -1,10 +1,13 @@
 import { Link, NavLink } from 'react-router-dom'
 import { ListTodo, Trash2, BarChart3 } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
+import { useLanguage } from '../context/LanguageContext'
 import ThemeToggle from './ThemeToggle'
+import LanguageToggle from './LanguageToggle'
 
 function Header() {
   const { trashedTasks } = useTasks()
+  const { t } = useLanguage()
 
   return (
     <header className="w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
@@ -13,7 +16,7 @@ function Header() {
           <ListTodo className="w-6 h-6 text-indigo-600" />
           TaskFlow
         </Link>
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <nav className="flex items-center gap-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             <NavLink
               to="/"
@@ -22,14 +25,14 @@ function Header() {
                 `px-2 py-1 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
               }
             >
-              Home
+              {t('nav.home')}
             </NavLink>
             <NavLink
               to="/analytics"
+              aria-label={t('nav.analytics')}
               className={({ isActive }) =>
                 `flex items-center justify-center w-8 h-8 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
               }
-              aria-label="Analytics"
             >
               <BarChart3 className="w-4 h-4" />
             </NavLink>
@@ -39,11 +42,11 @@ function Header() {
                 `px-2 py-1 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
               }
             >
-              About
+              {t('nav.about')}
             </NavLink>
             <NavLink
               to="/trash"
-              aria-label={`Trash, ${trashedTasks.length} deleted tasks`}
+              aria-label={t('nav.trashLabel', { count: trashedTasks.length })}
               className={({ isActive }) =>
                 `relative flex items-center justify-center w-8 h-8 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
               }
@@ -56,6 +59,7 @@ function Header() {
               )}
             </NavLink>
           </nav>
+          <LanguageToggle />
           <ThemeToggle />
         </div>
       </div>

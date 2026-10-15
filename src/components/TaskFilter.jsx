@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
 
 const FILTERS = ['All', 'Active', 'Completed']
 
 function TaskFilter({ activeFilter, onFilterChange }) {
+  const { t } = useLanguage()
+
   return (
-    <div className="flex gap-2" role="group" aria-label="Filter tasks">
+    <div className="flex gap-2" role="group" aria-label={t('filter.group')}>
       {FILTERS.map((filter) => (
         <motion.button
           key={filter}
@@ -17,7 +20,7 @@ function TaskFilter({ activeFilter, onFilterChange }) {
               : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
           }`}
         >
-          {filter}
+          {t(`filter.${filter}`)}
         </motion.button>
       ))}
     </div>
