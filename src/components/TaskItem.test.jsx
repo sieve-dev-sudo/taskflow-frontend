@@ -30,7 +30,7 @@ describe('TaskItem', () => {
 
   it('renders the priority badge', () => {
     renderWithProviders(<TaskItem task={mockTask} />)
-    expect(screen.getByText('medium')).toBeInTheDocument()
+    expect(screen.getByText('Medium')).toBeInTheDocument()
   })
 
   it('shows checkbox reflecting completed state', () => {
