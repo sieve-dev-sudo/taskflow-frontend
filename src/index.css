@@ -13,6 +13,11 @@
 
 html {
   scrollbar-gutter: stable;
+  font-size: 106.25%;
+}
+
+html[lang='km'] {
+  font-size: 112.5%;
 }
 
 html[lang='km'] body {
