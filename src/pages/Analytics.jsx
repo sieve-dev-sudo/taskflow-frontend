@@ -11,7 +11,7 @@ function Analytics() {
 
   const categoryData = getTasksByCategory(tasks).map((entry) => ({
     ...entry,
-    name: t(`category.${entry.name}`),
+    label: t(`category.${entry.name}`),
   }))
 
   const priorityData = getTasksByPriority(tasks).map((entry) => ({
