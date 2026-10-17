@@ -6,6 +6,7 @@
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![Tested](https://img.shields.io/badge/Tested-Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
+![Languages](https://img.shields.io/badge/Languages-Khmer%20%7C%20English-orange?style=for-the-badge)
 ![Responsive](https://img.shields.io/badge/Responsive-Yes-brightgreen?style=for-the-badge)
 
 </div>
@@ -15,15 +16,16 @@
 ## ✨ Features
 
 - បន្ថែម, កែប្រែ, លុប Tasks (Add / Edit / Delete)
+- ប្តូរភាសារវាង ខ្មែរ និង English ដោយចុចតែម្តង ហើយចងចាំភាសាដែលបានជ្រើស
 - បន្ថែម Notes លម្អិតសម្រាប់ Task នីមួយៗ ដោយចុចលើ Task ដើម្បីបើក Detail Modal
 - កំណត់ Priority Level Low / Medium / High មាន Badge ពណ៌ខុសៗគ្នា
 - កំណត់ Category សម្រាប់ Task នីមួយៗ (General, Work, Personal, Shopping, Health)
 - កំណត់ Due Date សម្រាប់ Task នីមួយៗ ព្រមទាំង Overdue Indicator
 - Filter តាមស្ថានភាព All / Active / Completed
 - Search Bar រកមើល Task ភ្លាមៗតាមឈ្មោះ
-- Bulk Actions, ជ្រើសរើស Tasks ច្រើន ដើម្បី Complete ឬ Delete ព្រមគ្នា
+- Select Mode, ជ្រើសរើស Tasks ច្រើន ដើម្បី Complete ឬ Delete ព្រមគ្នា
 - Stats Dashboard បង្ហាញ Progress Bar និងភាគរយបញ្ចប់ការងារ
-- Analytics Page ជាមួយ Pie Chart, Bar Chart, និង Line Chart សម្រាប់មើល Trend
+- Analytics Page ជាមួយ Donut Chart (មានលេខសរុបនៅកណ្តាល, Legend តាមលំដាប់, Hover Highlight), Bar Chart និង Line Chart
 - Trash Bin, Soft Delete, Restore, និង Permanent Delete
 - Undo Action ភ្លាមៗពេលលុប Task ដោយចុច Undo ក្នុង Toast
 - Toast Notifications សម្រាប់រាល់សកម្មភាព (Add, Edit, Delete, Restore)
@@ -66,9 +68,11 @@ taskflow-frontend/
 │   │   ├── PriorityBadge.jsx
 │   │   ├── CategoryBadge.jsx
 │   │   ├── CategoryPieChart.jsx
+│   │   ├── CategoryPieChart.test.jsx
 │   │   ├── PriorityBarChart.jsx
 │   │   ├── CompletionTrendChart.jsx
 │   │   ├── ThemeToggle.jsx
+│   │   ├── LanguageToggle.jsx
 │   │   ├── ToastContainer.jsx
 │   │   ├── ErrorBoundary.jsx
 │   │   └── EmptyState.jsx
@@ -81,7 +85,11 @@ taskflow-frontend/
 │   │   ├── TaskContext.jsx
 │   │   ├── TaskContext.test.jsx
 │   │   ├── ThemeContext.jsx
+│   │   ├── LanguageContext.jsx
+│   │   ├── LanguageContext.test.jsx
 │   │   └── ToastContext.jsx
+│   ├── i18n/
+│   │   └── translations.js
 │   ├── hooks/
 │   │   └── useTasks.js
 │   ├── utils/
