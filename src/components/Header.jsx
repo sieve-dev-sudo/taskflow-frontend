@@ -1,9 +1,16 @@
 import { Link, NavLink } from 'react-router-dom'
-import { ListTodo, Trash2, BarChart3 } from 'lucide-react'
+import { ListTodo, Trash2 } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import { useLanguage } from '../context/LanguageContext'
 import ThemeToggle from './ThemeToggle'
 import LanguageToggle from './LanguageToggle'
+
+const navLinkClass = ({ isActive }) =>
+  `px-2 py-1 rounded-md ${
+    isActive
+      ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600'
+      : 'hover:text-primary'
+  }`
 
 function Header() {
   const { trashedTasks } = useTasks()
@@ -18,37 +25,24 @@ function Header() {
         </Link>
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <nav className="flex items-center gap-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-            <NavLink
-              to="/"
-              end
-              className={({ isActive }) =>
-                `px-2 py-1 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
-              }
-            >
+            <NavLink to="/" end className={navLinkClass}>
               {t('nav.home')}
             </NavLink>
-            <NavLink
-              to="/analytics"
-              aria-label={t('nav.analytics')}
-              className={({ isActive }) =>
-                `flex items-center justify-center w-8 h-8 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
-              }
-            >
-              <BarChart3 className="w-4 h-4" />
+            <NavLink to="/analytics" className={navLinkClass}>
+              {t('nav.analytics')}
             </NavLink>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `px-2 py-1 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
-              }
-            >
+            <NavLink to="/about" className={navLinkClass}>
               {t('nav.about')}
             </NavLink>
             <NavLink
               to="/trash"
               aria-label={t('nav.trashLabel', { count: trashedTasks.length })}
               className={({ isActive }) =>
-                `relative flex items-center justify-center w-8 h-8 rounded-md ${isActive ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600' : 'hover:text-primary'}`
+                `relative flex items-center justify-center w-8 h-8 rounded-md ${
+                  isActive
+                    ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600'
+                    : 'hover:text-primary'
+                }`
               }
             >
               <Trash2 className="w-4 h-4" />
