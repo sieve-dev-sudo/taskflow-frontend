@@ -50,6 +50,12 @@ export function LanguageProvider({ children }) {
   }, [language])
 
   const toggleLanguage = useCallback(() => {
+    // Restart the short fade animation so the text swap feels smooth.
+    const root = document.documentElement
+    root.classList.remove('lang-switching')
+    void root.offsetWidth
+    root.classList.add('lang-switching')
+
     setLanguage((prev) => (prev === 'en' ? 'km' : 'en'))
   }, [])
 

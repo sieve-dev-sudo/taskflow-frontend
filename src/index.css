@@ -13,15 +13,11 @@
 
 html {
   scrollbar-gutter: stable;
-  font-size: 106.25%;
+  font-size: 110%;
 }
 
-html[lang='km'] {
-  font-size: 112.5%;
-}
-
-html[lang='km'] body {
-  font-family: 'Noto Sans Khmer', system-ui, sans-serif;
+body {
+  font-family: 'Noto Sans Khmer', ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
@@ -31,4 +27,17 @@ html[lang='km'] body {
 ::selection {
   background-color: var(--color-primary);
   color: white;
+}
+
+@keyframes lang-fade {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html.lang-switching #root {
+  animation: lang-fade 0.25s ease-out;
 }

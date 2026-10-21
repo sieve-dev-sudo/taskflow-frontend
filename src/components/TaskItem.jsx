@@ -6,6 +6,7 @@ import { useLanguage } from '../context/LanguageContext'
 import PriorityBadge from './PriorityBadge'
 import CategoryBadge from './CategoryBadge'
 import TaskDetailModal from './TaskDetailModal'
+import TaskEditModal from './TaskEditModal'
 import { formatDate, isOverdue } from '../utils/date'
 
 function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSelect }) {
@@ -15,6 +16,7 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(task.title)
   const [showDetail, setShowDetail] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
 
   const handleSave = () => {
     if (editValue.trim() && editValue.trim() !== task.title) {
@@ -122,28 +124,32 @@ function TaskItem({ task, selectionMode = false, isSelected = false, onToggleSel
           <CategoryBadge category={task.category} />
           <PriorityBadge priority={task.priority} />
           {!selectionMode && (
-            <>
+            <div className="flex items-center gap-3 ml-2">
               <button
-                onClick={() => setIsEditing(true)}
+                onClick={() => setShowEdit(true)}
                 aria-label={t('task.editLabel', { title: task.title })}
-                className="text-indigo-600 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded p-1"
+                className="p-1.5 rounded-md text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:text-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
               >
                 <Pencil className="w-4 h-4" />
               </button>
               <button
                 onClick={handleDelete}
                 aria-label={t('task.deleteLabel', { title: task.title })}
-                className="text-red-600 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded p-1"
+                className="p-1.5 rounded-md text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
-            </>
+            </div>
           )}
         </div>
       </div>
 
       {showDetail && (
         <TaskDetailModal task={task} onClose={() => setShowDetail(false)} />
+      )}
+
+      {showEdit && (
+        <TaskEditModal task={task} onClose={() => setShowEdit(false)} />
       )}
     </>
   )
