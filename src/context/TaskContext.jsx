@@ -50,6 +50,13 @@ export function TaskProvider({ children }) {
     )
   }
 
+  /** Updates several fields of one task at once (used by the edit popup). */
+  const updateTask = (id, updates) => {
+    setTasks((prev) =>
+      prev.map((task) => (task.id === id ? { ...task, ...updates } : task))
+    )
+  }
+
   const updateNotes = (id, notes) => {
     setTasks((prev) =>
       prev.map((task) => (task.id === id ? { ...task, notes } : task))
@@ -120,6 +127,7 @@ export function TaskProvider({ children }) {
     addTask,
     toggleTask,
     editTask,
+    updateTask,
     updateNotes,
     deleteTask: softDeleteTask,
     restoreTask,
