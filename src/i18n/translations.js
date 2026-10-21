@@ -68,6 +68,11 @@ export const translations = {
     'detail.notesPlaceholder': 'Add details, links, or context for this task...',
     'detail.done': 'Done',
 
+    'edit.title': 'Edit Task',
+    'edit.save': 'Save Changes',
+    'edit.cancel': 'Cancel',
+    'edit.titleRequired': 'Please enter a task title',
+
     'bulk.selectedOne': '1 task selected',
     'bulk.selectedMany': '{count} tasks selected',
     'bulk.complete': 'Complete',
@@ -191,6 +196,11 @@ export const translations = {
     'detail.notes': 'កំណត់ចំណាំ',
     'detail.notesPlaceholder': 'បន្ថែមព័ត៌មានលម្អិត តំណ ឬបរិបទសម្រាប់ការងារនេះ...',
     'detail.done': 'រួចរាល់',
+
+    'edit.title': 'កែប្រែការងារ',
+    'edit.save': 'រក្សាទុកការកែប្រែ',
+    'edit.cancel': 'បោះបង់',
+    'edit.titleRequired': 'សូមបញ្ចូលចំណងជើងការងារ',
 
     'bulk.selectedOne': 'បានជ្រើសរើស 1 ការងារ',
     'bulk.selectedMany': 'បានជ្រើសរើស {count} ការងារ',
