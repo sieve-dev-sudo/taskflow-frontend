@@ -1,4 +1,5 @@
 import { CATEGORIES } from './categories'
+import { isKhmerLocale, getKhmerWeekday } from './khmerDate'
 
 /**
  * Counts active (non-deleted) tasks grouped by category.
@@ -23,6 +24,18 @@ export function getTasksByPriority(tasks) {
     name: level.charAt(0).toUpperCase() + level.slice(1),
     count: tasks.filter((task) => task.priority === level).length,
   }))
+}
+
+/**
+ * Label for one day on the chart axis: the full weekday name in Khmer,
+ * and the short weekday (Sun, Mon ...) in other languages.
+ * @param {Date} date
+ * @param {string} locale
+ * @returns {string}
+ */
+function getWeekdayLabel(date, locale) {
+  if (isKhmerLocale(locale)) return getKhmerWeekday(date)
+  return date.toLocaleDateString(locale, { weekday: 'short' })
 }
 
 /**
@@ -51,7 +64,7 @@ export function getCompletionTrend(tasks, locale = 'en-US') {
     }).length
 
     return {
-      day: day.toLocaleDateString(locale, { weekday: 'short' }),
+      day: getWeekdayLabel(day, locale),
       completed,
     }
   })
