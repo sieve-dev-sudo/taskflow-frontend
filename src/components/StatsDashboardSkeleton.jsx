@@ -1,15 +1,15 @@
 function StatsDashboardSkeleton() {
   return (
-    <div className="mb-6 p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm animate-pulse">
-      <div className="flex justify-between mb-3">
-        <div className="h-4 w-40 bg-slate-200 dark:bg-slate-700 rounded" />
-        <div className="h-4 w-10 bg-slate-200 dark:bg-slate-700 rounded" />
+    <div className="card animate-pulse p-5" aria-hidden="true">
+      <div className="flex items-end justify-between">
+        <div className="h-4 w-40 rounded bg-slate-200 dark:bg-slate-700" />
+        <div className="h-8 w-14 rounded bg-slate-200 dark:bg-slate-700" />
       </div>
-      <div className="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full" />
-      <div className="flex gap-4 mt-4">
-        <div className="h-6 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
-        <div className="h-6 w-24 bg-slate-200 dark:bg-slate-700 rounded-full" />
-        <div className="h-6 w-16 bg-slate-200 dark:bg-slate-700 rounded-full" />
+      <div className="mt-3 h-2.5 w-full rounded-full bg-slate-200 dark:bg-slate-700" />
+      <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="h-14 rounded-xl bg-slate-100 dark:bg-slate-700/60" />
+        <div className="h-14 rounded-xl bg-slate-100 dark:bg-slate-700/60" />
+        <div className="h-14 rounded-xl bg-slate-100 dark:bg-slate-700/60" />
       </div>
     </div>
   )

@@ -1,9 +1,32 @@
 import { useState } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, ChevronDown } from 'lucide-react'
 import { useTasks } from '../context/TaskContext'
 import { useToast } from '../context/ToastContext'
 import { useLanguage } from '../context/LanguageContext'
 import { CATEGORIES } from '../utils/categories'
+
+const labelClass = 'mb-1.5 block text-xs font-medium text-slate-500 dark:text-slate-400'
+
+function SelectField({ id, label, value, onChange, children }) {
+  return (
+    <div>
+      <label htmlFor={id} className={labelClass}>
+        {label}
+      </label>
+      <div className="relative">
+        <select
+          id={id}
+          value={value}
+          onChange={onChange}
+          className="field appearance-none pr-9"
+        >
+          {children}
+        </select>
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+      </div>
+    </div>
+  )
+}
 
 function TaskForm() {
   const [title, setTitle] = useState('')
@@ -26,62 +49,74 @@ function TaskForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 mb-4" aria-label={t('form.formLabel')}>
-      <div>
-        <label htmlFor="task-title" className="sr-only">{t('form.titleLabel')}</label>
-        <input
-          id="task-title"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder={t('form.titlePlaceholder')}
-          aria-required="true"
-          className="w-full px-4 py-3 text-base border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-        />
+    <form
+      onSubmit={handleSubmit}
+      className="card space-y-4 p-4 sm:p-5"
+      aria-label={t('form.formLabel')}
+    >
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex-1">
+          <label htmlFor="task-title" className="sr-only">
+            {t('form.titleLabel')}
+          </label>
+          <input
+            id="task-title"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder={t('form.titlePlaceholder')}
+            aria-required="true"
+            className="field py-3 text-base"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={!title.trim()}
+          aria-label={t('form.addTaskLabel')}
+          className="btn-primary w-full whitespace-nowrap sm:w-auto"
+        >
+          <Plus className="h-4 w-4" />
+          {t('form.addTask')}
+        </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-2">
-        <label htmlFor="task-category" className="sr-only">{t('form.categoryLabel')}</label>
-        <select
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <SelectField
           id="task-category"
+          label={t('form.categoryLabel')}
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         >
           {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>{t(`category.${cat}`)}</option>
+            <option key={cat} value={cat}>
+              {t(`category.${cat}`)}
+            </option>
           ))}
-        </select>
+        </SelectField>
 
-        <label htmlFor="task-priority" className="sr-only">{t('form.priorityLabel')}</label>
-        <select
+        <SelectField
           id="task-priority"
+          label={t('form.priorityLabel')}
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
-          className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
         >
           <option value="low">{t('priority.low')}</option>
           <option value="medium">{t('priority.medium')}</option>
           <option value="high">{t('priority.high')}</option>
-        </select>
+        </SelectField>
 
-        <label htmlFor="task-due-date" className="sr-only">{t('form.dueDateLabel')}</label>
-        <input
-          id="task-due-date"
-          type="date"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-          className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-        />
-
-        <button
-          type="submit"
-          aria-label={t('form.addTaskLabel')}
-          className="flex items-center justify-center gap-1.5 px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 sm:w-auto w-full"
-        >
-          <Plus className="w-4 h-4" />
-          {t('form.addTask')}
-        </button>
+        <div>
+          <label htmlFor="task-due-date" className={labelClass}>
+            {t('form.dueDateLabel')}
+          </label>
+          <input
+            id="task-due-date"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            className="field"
+          />
+        </div>
       </div>
     </form>
   )

@@ -5,11 +5,18 @@ import { useLanguage } from '../context/LanguageContext'
 import ThemeToggle from './ThemeToggle'
 import LanguageToggle from './LanguageToggle'
 
-const navLinkClass = ({ isActive }) =>
-  `px-2 py-1 rounded-md ${
-    isActive
-      ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600'
-      : 'hover:text-primary'
+const linkBase =
+  'rounded-lg text-sm font-medium transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-200 dark:focus-visible:ring-indigo-500/30'
+const linkActive = 'bg-white text-indigo-600 shadow-sm dark:bg-slate-700 dark:text-indigo-300'
+const linkIdle =
+  'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
+
+const textLink = ({ isActive }) =>
+  `${linkBase} px-3 py-1.5 ${isActive ? linkActive : linkIdle}`
+
+const iconLink = ({ isActive }) =>
+  `${linkBase} relative flex h-8 w-9 items-center justify-center ${
+    isActive ? linkActive : linkIdle
   }`
 
 function Header() {
@@ -17,37 +24,42 @@ function Header() {
   const { t } = useLanguage()
 
   return (
-    <header className="w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-      <div className="max-w-4xl mx-auto px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
-        <Link to="/" className="flex items-center gap-2 text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100">
-          <ListTodo className="w-6 h-6 text-indigo-600" />
-          TaskFlow
+    <header className="sticky top-0 z-30 w-full border-b border-slate-200/70 bg-white/80 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/80">
+      <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-3 px-4 py-3 sm:flex-row sm:px-6">
+        <Link
+          to="/"
+          className="flex items-center gap-2.5 rounded-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-200 dark:focus-visible:ring-indigo-500/30"
+        >
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-br from-indigo-600 to-violet-600 text-white shadow-sm">
+            <ListTodo className="h-5 w-5" />
+          </span>
+          <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            TaskFlow
+          </span>
         </Link>
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <nav className="flex items-center gap-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-            <NavLink to="/" end className={navLinkClass}>
+
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+          <nav
+            aria-label={t('nav.main')}
+            className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 dark:bg-slate-800"
+          >
+            <NavLink to="/" end className={textLink}>
               {t('nav.home')}
             </NavLink>
-            <NavLink to="/analytics" className={navLinkClass}>
+            <NavLink to="/analytics" className={textLink}>
               {t('nav.analytics')}
             </NavLink>
-            <NavLink to="/about" className={navLinkClass}>
+            <NavLink to="/about" className={textLink}>
               {t('nav.about')}
             </NavLink>
             <NavLink
               to="/trash"
               aria-label={t('nav.trashLabel', { count: trashedTasks.length })}
-              className={({ isActive }) =>
-                `relative flex items-center justify-center w-8 h-8 rounded-md ${
-                  isActive
-                    ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600'
-                    : 'hover:text-primary'
-                }`
-              }
+              className={iconLink}
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="h-4 w-4" />
               {trashedTasks.length > 0 && (
-                <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-[10px] font-semibold text-white bg-red-600 rounded-full">
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">
                   {trashedTasks.length}
                 </span>
               )}

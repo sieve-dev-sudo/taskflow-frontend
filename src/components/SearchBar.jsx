@@ -5,9 +5,11 @@ function SearchBar({ value, onChange }) {
   const { t } = useLanguage()
 
   return (
-    <div className="relative flex-1">
-      <label htmlFor="task-search" className="sr-only">{t('search.label')}</label>
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+    <div className="relative w-full sm:w-72">
+      <label htmlFor="task-search" className="sr-only">
+        {t('search.label')}
+      </label>
+      <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
       <input
         id="task-search"
         type="text"
@@ -15,7 +17,7 @@ function SearchBar({ value, onChange }) {
         onChange={(e) => onChange(e.target.value)}
         placeholder={t('search.placeholder')}
         aria-label={t('search.label')}
-        className="w-full pl-10 pr-4 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+        className="field py-2 pl-10 text-sm"
       />
     </div>
   )
