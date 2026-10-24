@@ -7,7 +7,9 @@ export const extraTranslations = {
     'greeting.evening': 'Good evening',
     'greeting.night': 'Good night',
 
-    'home.summaryNone': 'Your list is empty. Add your first task below.',
+    'add.title': 'Add New Task',
+
+    'home.summaryNone': 'Your list is empty. Press Add Task to create your first one.',
     'home.summaryOne': '1 task left to finish',
     'home.summaryLeft': '{count} tasks left to finish',
     'home.summaryDone': 'All done. Great work!',
@@ -15,6 +17,9 @@ export const extraTranslations = {
     'stats.activeLabel': 'Active',
     'stats.completedLabel': 'Completed',
     'stats.totalLabel': 'Total',
+
+    // Replaces the older entry in translations.js, since the form is now a popup.
+    'empty.noTasks': 'No tasks yet. Press Add Task to get started.',
   },
 
   km: {
@@ -25,7 +30,9 @@ export const extraTranslations = {
     'greeting.evening': 'សួស្តីពេលល្ងាច',
     'greeting.night': 'រាត្រីសួស្តី',
 
-    'home.summaryNone': 'បញ្ជីរបស់អ្នកទទេ។ សូមបន្ថែមការងារដំបូងខាងក្រោម។',
+    'add.title': 'បន្ថែមការងារថ្មី',
+
+    'home.summaryNone': 'បញ្ជីរបស់អ្នកទទេ។ ចុចប៊ូតុង "បន្ថែមការងារ" ដើម្បីបង្កើតការងារដំបូង។',
     'home.summaryOne': 'នៅសល់ 1 ការងារត្រូវបញ្ចប់',
     'home.summaryLeft': 'នៅសល់ {count} ការងារត្រូវបញ្ចប់',
     'home.summaryDone': 'រួចរាល់ទាំងអស់ ល្អណាស់!',
@@ -33,6 +40,8 @@ export const extraTranslations = {
     'stats.activeLabel': 'កំពុងធ្វើ',
     'stats.completedLabel': 'បានបញ្ចប់',
     'stats.totalLabel': 'សរុប',
+
+    'empty.noTasks': 'មិនទាន់មានការងារទេ។ ចុច "បន្ថែមការងារ" ដើម្បីចាប់ផ្តើម។',
 
     // Wording fixes. These replace the older entries in translations.js.
     'toast.undo': 'ត្រឡប់វិញ',
