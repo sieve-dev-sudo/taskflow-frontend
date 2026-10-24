@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { CheckSquare } from 'lucide-react'
-import TaskForm from '../components/TaskForm'
+import { CheckSquare, Plus } from 'lucide-react'
+import TaskAddModal from '../components/TaskAddModal'
 import TaskList from '../components/TaskList'
 import TaskFilter from '../components/TaskFilter'
 import SearchBar from '../components/SearchBar'
@@ -21,6 +21,7 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectionMode, setSelectionMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState([])
+  const [showAdd, setShowAdd] = useState(false)
 
   const now = new Date()
   const greetingKey = getGreetingKey(now.getHours())
@@ -79,19 +80,28 @@ function Home() {
 
   return (
     <div className="space-y-6">
-      <header className="space-y-1">
-        <p className="text-sm font-medium text-indigo-600 dark:text-indigo-300">
-          {dateLabel}
-        </p>
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-          {t(greetingKey)}
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400">{summary}</p>
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <p className="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+            {dateLabel}
+          </p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            {t(greetingKey)}
+          </h1>
+          <p className="text-slate-600 dark:text-slate-400">{summary}</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setShowAdd(true)}
+          className="btn-primary w-full whitespace-nowrap sm:w-auto"
+        >
+          <Plus className="h-4 w-4" />
+          {t('form.addTask')}
+        </button>
       </header>
 
       {isLoading ? <StatsDashboardSkeleton /> : <StatsDashboard tasks={tasks} />}
-
-      <TaskForm />
 
       <section className="space-y-4">
         <div className="flex items-center justify-between gap-3">
@@ -140,6 +150,8 @@ function Home() {
           />
         )}
       </section>
+
+      {showAdd && <TaskAddModal onClose={() => setShowAdd(false)} />}
     </div>
   )
 }
