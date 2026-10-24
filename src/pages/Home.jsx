@@ -14,11 +14,35 @@ import { useLanguage } from '../context/LanguageContext'
 function Home() {
   const { tasks, isLoading, bulkComplete, bulkDelete } = useTasks()
   const { showToast } = useToast()
-  const { t } = useLanguage()
+  const { t, locale } = useLanguage()
   const [filter, setFilter] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectionMode, setSelectionMode] = useState(false)
   const [selectedIds, setSelectedIds] = useState([])
+
+  const now = new Date()
+  const hour = now.getHours()
+  const greetingKey =
+    hour < 12 ? 'greeting.morning' : hour < 18 ? 'greeting.afternoon' : 'greeting.evening'
+  const dateLabel = now.toLocaleDateString(locale, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  })
+
+  const completedCount = tasks.filter((task) => task.completed).length
+  const remaining = tasks.length - completedCount
+  const counts = {
+    All: tasks.length,
+    Active: remaining,
+    Completed: completedCount,
+  }
+
+  let summary
+  if (tasks.length === 0) summary = t('home.summaryNone')
+  else if (remaining === 0) summary = t('home.summaryDone')
+  else if (remaining === 1) summary = t('home.summaryOne')
+  else summary = t('home.summaryLeft', { count: remaining })
 
   const filteredTasks = tasks
     .filter((task) => {
@@ -59,53 +83,67 @@ function Home() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-          {t('home.title')}
-        </h2>
-        {tasks.length > 0 && (
-          <button
-            onClick={handleToggleSelectionMode}
-            aria-pressed={selectionMode}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
-              selectionMode
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-          >
-            <CheckSquare className="w-4 h-4" />
-            {selectionMode ? t('home.cancel') : t('home.select')}
-          </button>
-        )}
-      </div>
+      <header className="space-y-1">
+        <p className="text-sm font-medium text-indigo-600 dark:text-indigo-300">
+          {dateLabel}
+        </p>
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          {t(greetingKey)}
+        </h1>
+        <p className="text-slate-600 dark:text-slate-400">{summary}</p>
+      </header>
 
-      {isLoading ? (
-        <StatsDashboardSkeleton />
-      ) : (
-        <StatsDashboard tasks={tasks} />
-      )}
-      <div className="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 shadow-sm space-y-4">
-        <TaskForm />
-        <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-          <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
+      {isLoading ? <StatsDashboardSkeleton /> : <StatsDashboard tasks={tasks} />}
+
+      <TaskForm />
+
+      <section className="space-y-4">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            {t('home.title')}
+          </h2>
+          {tasks.length > 0 && (
+            <button
+              onClick={handleToggleSelectionMode}
+              aria-pressed={selectionMode}
+              className={
+                selectionMode
+                  ? 'inline-flex items-center gap-2 rounded-xl border border-indigo-600 bg-indigo-600 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-indigo-500 focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-200 dark:focus-visible:ring-indigo-500/30'
+                  : 'btn-ghost'
+              }
+            >
+              <CheckSquare className="h-4 w-4" />
+              {selectionMode ? t('home.cancel') : t('home.select')}
+            </button>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <TaskFilter
+            activeFilter={filter}
+            onFilterChange={setFilter}
+            counts={counts}
+          />
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
         </div>
-      </div>
-      <BulkActionBar
-        selectedCount={selectedIds.length}
-        onComplete={handleBulkComplete}
-        onDelete={handleBulkDelete}
-        onClear={() => setSelectedIds([])}
-      />
-      {!isLoading && (
-        <TaskList
-          tasks={filteredTasks}
-          hasActiveSearch={hasActiveSearch}
-          selectionMode={selectionMode}
-          selectedIds={selectedIds}
-          onToggleSelect={handleToggleSelect}
+
+        <BulkActionBar
+          selectedCount={selectedIds.length}
+          onComplete={handleBulkComplete}
+          onDelete={handleBulkDelete}
+          onClear={() => setSelectedIds([])}
         />
-      )}
+
+        {!isLoading && (
+          <TaskList
+            tasks={filteredTasks}
+            hasActiveSearch={hasActiveSearch}
+            selectionMode={selectionMode}
+            selectedIds={selectedIds}
+            onToggleSelect={handleToggleSelect}
+          />
+        )}
+      </section>
     </div>
   )
 }
