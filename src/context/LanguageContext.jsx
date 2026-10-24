@@ -1,9 +1,15 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { translations } from '../i18n/translations'
+import { translations as baseTranslations } from '../i18n/translations'
+import { extraTranslations } from '../i18n/extraTranslations'
 
 const STORAGE_KEY = 'taskflow-language'
 const DEFAULT_LANGUAGE = 'en'
 const LOCALES = { en: 'en-US', km: 'km-KH' }
+
+const translations = {
+  en: { ...baseTranslations.en, ...extraTranslations.en },
+  km: { ...baseTranslations.km, ...extraTranslations.km },
+}
 
 /**
  * Looks up a translation key and fills in {placeholders}.
