@@ -5,6 +5,7 @@ export const extraTranslations = {
     'greeting.morning': 'Good morning',
     'greeting.afternoon': 'Good afternoon',
     'greeting.evening': 'Good evening',
+    'greeting.night': 'Good night',
 
     'home.summaryNone': 'Your list is empty. Add your first task below.',
     'home.summaryOne': '1 task left to finish',
@@ -19,9 +20,10 @@ export const extraTranslations = {
   km: {
     'nav.main': 'ម៉ឺនុយមេ',
 
-    'greeting.morning': 'ព្រឹកសួស្តី',
-    'greeting.afternoon': 'រសៀលសួស្តី',
-    'greeting.evening': 'ល្ងាចសួស្តី',
+    'greeting.morning': 'អរុណសួស្តី',
+    'greeting.afternoon': 'សួស្តីពេលរសៀល',
+    'greeting.evening': 'សួស្តីពេលល្ងាច',
+    'greeting.night': 'រាត្រីសួស្តី',
 
     'home.summaryNone': 'បញ្ជីរបស់អ្នកទទេ។ សូមបន្ថែមការងារដំបូងខាងក្រោម។',
     'home.summaryOne': 'នៅសល់ 1 ការងារត្រូវបញ្ចប់',
@@ -31,5 +33,10 @@ export const extraTranslations = {
     'stats.activeLabel': 'កំពុងធ្វើ',
     'stats.completedLabel': 'បានបញ្ចប់',
     'stats.totalLabel': 'សរុប',
+
+    // Wording fixes. These replace the older entries in translations.js.
+    'toast.undo': 'ត្រឡប់វិញ',
+    'toast.movedToTrash': 'បានដាក់ទៅក្នុងធុងសម្រាម',
+    'toast.bulkTrashed': 'បានដាក់ {count} ការងារទៅក្នុងធុងសម្រាម',
   },
 }

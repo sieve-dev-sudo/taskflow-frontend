@@ -10,6 +10,8 @@ import BulkActionBar from '../components/BulkActionBar'
 import { useTasks } from '../context/TaskContext'
 import { useToast } from '../context/ToastContext'
 import { useLanguage } from '../context/LanguageContext'
+import { formatLongDate } from '../utils/date'
+import { getGreetingKey } from '../utils/greeting'
 
 function Home() {
   const { tasks, isLoading, bulkComplete, bulkDelete } = useTasks()
@@ -21,14 +23,8 @@ function Home() {
   const [selectedIds, setSelectedIds] = useState([])
 
   const now = new Date()
-  const hour = now.getHours()
-  const greetingKey =
-    hour < 12 ? 'greeting.morning' : hour < 18 ? 'greeting.afternoon' : 'greeting.evening'
-  const dateLabel = now.toLocaleDateString(locale, {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-  })
+  const greetingKey = getGreetingKey(now.getHours())
+  const dateLabel = formatLongDate(now, locale)
 
   const completedCount = tasks.filter((task) => task.completed).length
   const remaining = tasks.length - completedCount

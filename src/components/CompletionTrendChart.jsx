@@ -3,9 +3,14 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 function CompletionTrendChart({ data }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
-      <LineChart data={data}>
+      <LineChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-        <XAxis dataKey="day" tick={{ fontSize: 12 }} />
+        <XAxis
+          dataKey="day"
+          interval={0}
+          padding={{ left: 28, right: 28 }}
+          tick={{ fontSize: 11 }}
+        />
         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
         <Tooltip />
         <Line
